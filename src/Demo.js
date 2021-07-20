@@ -4,7 +4,7 @@ import {fetchUserToken} from './redux'
 
 
 function Demo() {
-    const token = useSelector(state => state.token)
+    const token = useSelector(state => state.user.token)
     const dispatch = useDispatch()
     return (
         <div>
