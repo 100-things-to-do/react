@@ -1,22 +1,46 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserToken } from "../redux";
+import { Redirect } from "react-router";
 
-export default class Signin extends Component {
-    render() {
+
+
+export default function Signin() {
+
+    const token = useSelector(state => state.user.token)
+    const dispatch = useDispatch()
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = new FormData(event.target);
+        const userData = {}
+        for (let key of data.keys()) {
+            console.log(key, data.get(key))
+            if(key === 'username'){
+                userData.username = data.get(key)
+            }else if (key === 'password'){
+                userData.password = data.get(key)
+            }
+        }
+        dispatch(fetchUserToken(userData))
+    }
+
+    if(token === ''){
         return (
             <div className="auth-wrapper">
             <div className="auth-inner">
-            <form>
+            <form onSubmit={handleSubmit}>
                 
                 <h3>Sign In</h3>
 
                 <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
+                    <label>Username</label>
+                    <input name="username" type="text" className="form-control" placeholder="Enter username" />
                 </div>
 
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
+                    <input name="password" type="password" className="form-control" placeholder="Enter password" />
                 </div>
 
                 <div className="form-group">
@@ -34,5 +58,8 @@ export default class Signin extends Component {
             </div>
             </div>
         );
+    }
+    if(token !== ''){
+        return (<Redirect to='/' />)
     }
 }

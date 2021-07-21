@@ -1,4 +1,4 @@
-import { FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT } from "./userTypes"
+import { FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT, USER_SIGNED_UP } from "./userTypes"
 import axios from 'axios'
 
 const fetchUserRequest = () => {
@@ -41,10 +41,15 @@ const userSignedOut = () => {
     }
 }
 
-const fetchUserToken = () => {
+const userSignedUp = () => {
+    return {
+        type: USER_SIGNED_UP
+    }
+}
+
+const fetchUserToken = (data) => {
     return (dispatch) => {
         dispatch(fetchUserRequest)
-        const data = { username: 'doruk', password: 'dodo1234'}
         axios.post('http://localhost:5000/users/signin', data)
         .then(response => {
             console.log(response)
@@ -72,4 +77,18 @@ const checkToken = (token) => {
     }
 }
 
-export {fetchUserToken, checkToken, userSignedOut}
+const signUp = (data) => {
+    return (dispatch) => {
+        axios.post('http://localhost:5000/users/signup', data)
+        .then(response => {
+            console.log(response)
+            const user = response.data
+            fetchUserToken(user)
+        })
+        .catch(error => {
+            const errMsg = error.message
+        })        
+    }
+}
+
+export {fetchUserToken, checkToken, userSignedOut, signUp}
