@@ -1,22 +1,28 @@
-import { FETCH_USER_TOKEN } from "./userActions"
+import { FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_FAILURE } from "./userTypes"
 
 const initialState = {
+    loading: false,
     token: localStorage.getItem('token') || '',
-    myUserId: localStorage.getItem('myUserId') || ''
+    error: ''
 }
 
 const userReducer = (state = initialState, action) => {
     switch(action.type){
-        case FETCH_USER_TOKEN: return{
+        case FETCH_USER_REQUEST: return{
                 ...state,
-                token: "bbb",
-                myUserId: "temp"
+                loading: true
             }
-        
-
-        default: return {
-            ...state
+        case FETCH_USER_SUCCESS: return {
+            ...state,
+            loading: false,
+            token: action.payload
         }
+        case FETCH_USER_FAILURE: return {
+            ...state,
+            loading: false,
+            error: action.payload
+        }
+        default: return state
     }
 }
 
