@@ -1,1 +1,1 @@
-export { fetchUserToken } from './user/userActions'
+export { fetchUserToken, checkToken } from './user/userActions'

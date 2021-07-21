@@ -1,4 +1,4 @@
-import { FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_FAILURE } from "./userTypes"
+import { FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID } from "./userTypes"
 import axios from 'axios'
 
 const fetchUserRequest = () => {
@@ -21,11 +21,27 @@ const fetchUserFailure = (error) => {
     }
 }
 
+const tokenIsValid = (user) => {
+    return {
+        type: TOKEN_IS_VALID,
+        payload: user
+    }
+}
+
+const tokenIsNotValid = (error) => {
+    return {
+        type: TOKEN_IS_NOT_VALID,
+        payload: error
+    }
+} 
+
 const fetchUserToken = () => {
     return (dispatch) => {
         dispatch(fetchUserRequest)
-        axios.get('https://jsonplaceholder.typicode.com/users')
+        const data = { username: 'doruk', password: 'dodo1234'}
+        axios.post('http://localhost:5000/users/signin', data)
         .then(response => {
+            console.log(response)
             const users = response.data
             dispatch(fetchUserSuccess(users))
         })
@@ -36,4 +52,18 @@ const fetchUserToken = () => {
     }
 }
 
-export {fetchUserToken}
+
+const checkToken = (token) => {
+    return (dispatch) => {
+        axios.get('http://localhost:5000/users/whoami', { headers: {"Authorization" : `Bearer ${token}`} })
+        .then(response => {
+            dispatch(tokenIsValid())
+        })
+        .catch(error => {
+            console.log(error.message)
+            dispatch(tokenIsNotValid())
+        })
+    }
+}
+
+export {fetchUserToken, checkToken}
