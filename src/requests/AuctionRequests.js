@@ -22,3 +22,25 @@ export const updateAuction = (data, token, callback) => {
 
     })        
 }
+
+export const getAllAuctions = (token, callback) => {
+    axios.get('http://localhost:5000/auctions/', { headers: {"Authorization" : `Bearer ${token}`} })
+    .then(response => {
+        const auctionList = response.data
+        callback(true, auctionList)
+    })
+    .catch(error => {
+        callback(false, error.message)
+    })        
+}
+
+export const getAuction = (auctionId, token, callback) => {
+    axios.get(`http://localhost:5000/auctions/${auctionId}`, { headers: {"Authorization" : `Bearer ${token}`} })
+    .then(response => {
+        const auction = response.data
+        callback(true, auction)
+    })
+    .catch(error => {
+        callback(false, error.message)
+    })        
+}

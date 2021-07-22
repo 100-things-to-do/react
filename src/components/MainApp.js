@@ -8,6 +8,8 @@ import Signin from "./Signin";
 import Signup from "./Signup";
 import Signout from './Signout';
 import AddAuction from './AddAuction';
+import Auctions from './Auctions';
+import Auction from './Auction';
 
 function App() {
   const isUserValid = useSelector(state => state.user.isUserValid)
@@ -19,8 +21,9 @@ function App() {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
               {isUserValid ? (
-                null
-             
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/auctions"}>Auctions</Link>
+                </li>  
               ) : 
               (
                 <li className="nav-item">
@@ -53,7 +56,12 @@ function App() {
             <Route path="/sign-up" component={Signup} />
             <Route path="/sign-out" component={Signout}/>
             <Route path="/addAuction" component={AddAuction}/>
-            <Route path="/" component={AddAuction}/>
+            <Route path="/auctions" component={Auctions}/>
+            <Route path="/auction/:id" component={Auction}/>
+            {isUserValid ? 
+              <Route path="/" component={AddAuction}/> 
+              : <Route path="/" component={Signin}/>
+            }
           </Switch>
 
     </div></Router>
