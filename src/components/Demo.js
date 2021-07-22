@@ -7,7 +7,7 @@ function Demo() {
     const token = useSelector(state => state.user.token)
 
     useEffect(() => {
-        localStorage.setItem('token', token)
+        //console.log("aaa")
     }, [token])
 
     useEffect(() => {
