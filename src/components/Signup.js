@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
 import { signUp } from "../redux";
@@ -40,7 +40,7 @@ export default function Signup(){
     
                 <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
                 <p className="forgot-password text-right">
-                    Already registered <a href="#">sign in?</a>
+                    Already registered <a href="/">sign in?</a>
                 </p>
             </form>
             </div>

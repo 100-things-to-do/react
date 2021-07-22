@@ -1,4 +1,4 @@
-import { FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT, USER_SIGNED_UP } from "./userTypes"
+import { FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT } from "./userTypes"
 import axios from 'axios'
 
 const fetchUserRequest = () => {
@@ -41,11 +41,7 @@ const userSignedOut = () => {
     }
 }
 
-const userSignedUp = () => {
-    return {
-        type: USER_SIGNED_UP
-    }
-}
+
 
 const fetchUserToken = (data) => {
     return (dispatch) => {
@@ -86,7 +82,6 @@ const signUp = (data) => {
             fetchUserToken(user)
         })
         .catch(error => {
-            const errMsg = error.message
         })        
     }
 }

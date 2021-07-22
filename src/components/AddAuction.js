@@ -4,9 +4,14 @@ import { useSelector } from 'react-redux';
 
 function AddAuction() {
     const token = useSelector(state => state.user.token)
-    function dataPosted(auctionData){
-        console.log("data posted")
-        console.log(auctionData)
+    
+    function dataPosted(isSuccess, auctionData){
+        if(isSuccess){
+            console.log("data posted")
+        }else{
+            console.log("error!")
+        }
+
     }
 
     const handleSubmit = (event) => {

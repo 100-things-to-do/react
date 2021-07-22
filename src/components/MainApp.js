@@ -2,12 +2,12 @@ import React from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './MainApp.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import Signin from "./Signin";
 import Signup from "./Signup";
-import Auctions from './Auctions';
 import Signout from './Signout';
+import AddAuction from './AddAuction';
 
 function App() {
   const isUserValid = useSelector(state => state.user.isUserValid)
@@ -52,7 +52,8 @@ function App() {
             <Route path="/sign-in" component={Signin} />
             <Route path="/sign-up" component={Signup} />
             <Route path="/sign-out" component={Signout}/>
-            <Route path="/auctions" component={Auctions}/>
+            <Route path="/addAuction" component={AddAuction}/>
+            <Route path="/" component={AddAuction}/>
           </Switch>
 
     </div></Router>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Redirect } from 'react-router';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { userSignedOut } from '../redux';
 
 function Signout() {

@@ -1,4 +1,3 @@
-import React, { Component, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserToken } from "../redux";
 import { Redirect } from "react-router";
@@ -52,7 +51,7 @@ export default function Signin() {
 
                 <button type="submit" className="btn btn-primary btn-block">Submit</button>
                 <p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
+                    Forgot <a href="/">password?</a>
                 </p>
             </form>
             </div>
