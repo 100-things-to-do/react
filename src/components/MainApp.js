@@ -65,12 +65,12 @@ function App() {
 
 
 
-      <div class="card bg-secondary border-0 vbottom">
-        <div class="card-body text-light text-center">
-          <h5 class="card-title text-white display-4" style={{fontSize:30}}>Telif Hakkı</h5>
-          <p class="d-inline lead">Tüm Hakları Saklıdır © 2018
+      <div className="card bg-secondary border-0 vbottom">
+        <div className="card-body text-light text-center">
+          <h5 className="card-title text-white display-4" style={{fontSize:30}}>Telif Hakkı</h5>
+          <p className="d-inline lead">Tüm Hakları Saklıdır © 2018
           <br/>
-          <a href="#" class="text-light d-block lead">Blog</a>
+          <a href="#" className="text-light d-block lead">Blog</a>
           </p>
         </div>
       </div>
