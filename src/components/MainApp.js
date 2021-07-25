@@ -49,22 +49,37 @@ function App() {
         </div>
       </nav>
 
+      <Switch>
+        <Route exact path='/' component={Signin} />
+        <Route path="/sign-in" component={Signin} />
+        <Route path="/sign-up" component={Signup} />
+        <Route path="/sign-out" component={Signout}/>
+        <Route path="/addAuction" component={AddAuction}/>
+        <Route path="/auctions" component={Auctions}/>
+        <Route path="/auction/:id" component={Auction}/>
+        {isUserValid ? 
+          <Route path="/" component={AddAuction}/> 
+          : <Route path="/" component={Signin}/>
+        }
+      </Switch>
 
-          <Switch>
-            <Route exact path='/' component={Signin} />
-            <Route path="/sign-in" component={Signin} />
-            <Route path="/sign-up" component={Signup} />
-            <Route path="/sign-out" component={Signout}/>
-            <Route path="/addAuction" component={AddAuction}/>
-            <Route path="/auctions" component={Auctions}/>
-            <Route path="/auction/:id" component={Auction}/>
-            {isUserValid ? 
-              <Route path="/" component={AddAuction}/> 
-              : <Route path="/" component={Signin}/>
-            }
-          </Switch>
 
-    </div></Router>
+
+      <div class="card bg-secondary border-0 vbottom">
+        <div class="card-body text-light text-center">
+          <h5 class="card-title text-white display-4" style={{fontSize:30}}>Telif Hakkı</h5>
+          <p class="d-inline lead">Tüm Hakları Saklıdır © 2018
+          <br/>
+          <a href="#" class="text-light d-block lead">Blog</a>
+          </p>
+        </div>
+      </div>
+
+
+
+
+    </div>
+    </Router>
   );
 }
 
