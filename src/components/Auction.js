@@ -7,11 +7,19 @@ function Auction() {
     const token = useSelector(state => state.user.token)
     let { id } = useParams()
     const [auction, setAuction] = useState(null)
+
+    
     function getResult(isSuccess, data){
         if(isSuccess){
             setAuction(
-                <div><h3>Name: {data.name}</h3>
-                    <h3>Starting price: {data.startingPrice}</h3>
+
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="..."/>
+                    <div class="card-body">
+                        <h5 class="card-title">{data.name}</h5>
+                        <p class="card-text">{data.startingPrice}</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
                 </div>
                 )
         }else{
