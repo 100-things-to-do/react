@@ -11,39 +11,37 @@ import AddAuction from './AddAuction';
 import Auctions from './Auctions';
 import Auction from './Auction';
 
+
+const validUserNavItems = [
+  <li className="nav-item">
+    <Link className="nav-link" to={"/auctions"}>Auctions</Link>
+  </li>,
+  <li className="nav-item">
+    <Link className="nav-link" to={"/sign-out"}>Sign out</Link>
+  </li>
+
+]
+
+const nonValidUserNavItems = [
+  <li className="nav-item">
+    <Link className="nav-link" to={"/sign-in"}>Login</Link>
+  </li>,
+  <li className="nav-item">
+    <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
+  </li> 
+
+]
+
 function App() {
   const isUserValid = useSelector(state => state.user.isUserValid)
   return (<Router>
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
-          <Link className="navbar-brand" to={"/sign-in"}>Oglet</Link>
+          <Link className="navbar-brand" to={"/"}>Oglet</Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
-              {isUserValid ? (
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/auctions"}>Auctions</Link>
-                </li>  
-              ) : 
-              (
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-in"}>Login</Link>
-                </li>   
-              )
-              }
-
-              {isUserValid ? (
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-out"}>Sign out</Link>
-                </li>
-
-              ) : (
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
-                </li>          
-              )
-              }
-
+              {isUserValid ? validUserNavItems : nonValidUserNavItems}
             </ul>
           </div>
         </div>
