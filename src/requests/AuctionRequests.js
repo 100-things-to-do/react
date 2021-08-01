@@ -1,7 +1,13 @@
 import axios from 'axios';
 
 export const postAuction = (data, token, callback) => {
-    axios.post('http://localhost:5000/auctions/', data, { headers: {"Authorization" : `Bearer ${token}`} })
+    const header = { 
+        headers: {
+            "Authorization" : `Bearer ${token}`,
+            "Content-Type": 'multipart/form-data'
+            }
+        }
+    axios.post('http://localhost:5000/auctions/', data, header)
     .then(response => {
         const auctionData = response.data
         callback(true, auctionData)
