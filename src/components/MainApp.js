@@ -48,7 +48,6 @@ function App() {
       </nav>
 
       <Switch>
-        <Route exact path='/' component={Signin} />
         <Route path="/sign-in" component={Signin} />
         <Route path="/sign-up" component={Signup} />
         <Route path="/sign-out" component={Signout}/>
