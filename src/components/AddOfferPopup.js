@@ -12,6 +12,8 @@ function AddOfferPopup(props) {
     function handleSubmitCb(isSuccess, msg){
         if(isSuccess){
             setShowError(false)
+            localStorage.setItem('offerAdded', true)
+            window.location.reload();
         }else{
             setShowError(true)
             console.log(msg)

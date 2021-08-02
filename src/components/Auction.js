@@ -4,6 +4,8 @@ import { getAuction } from '../requests/AuctionRequests';
 import { useSelector } from 'react-redux';
 import './popup.css';
 import AddOfferPopup from './AddOfferPopup';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Auction() {
     const token = useSelector(state => state.user.token)
@@ -12,7 +14,8 @@ function Auction() {
     const [auction, setAuction] = useState(null)
     const [offers, setOffers] = useState([])
     const [ownerId, setOwnerId] = useState(null)
-    const [togglePopup, setTogglePopup] = useState(false) 
+    const [togglePopup, setTogglePopup] = useState(false)
+    const [offerAdded, setOfferAdded] = useState(localStorage.getItem('offerAdded') || false)
     const IMG_URL = "http://localhost:5000/"
     let tempOffers = []
     
@@ -30,7 +33,6 @@ function Auction() {
                     </div>
                 </div>
                 )
-                
             data.offers.map(renderOffer)
             setOffers(tempOffers)
         }else{
@@ -49,6 +51,20 @@ function Auction() {
 
     useEffect(() => {
         getAuction(id, token, getResult)
+        console.log(offerAdded)
+        if(offerAdded){
+            toast.success('🦄 Offer added!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+            setOfferAdded(false)
+        }
+
     }, [])
 
     return (
@@ -64,9 +80,22 @@ function Auction() {
             </div>
             {
             togglePopup ? (
-                <AddOfferPopup auctionId={id}/>
+                <AddOfferPopup auctionId={id} setOfferAdded={setOfferAdded}/>
             ) : null
             }
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                />
+                {/* Same as */}
+            <ToastContainer />
 
         </div>
     );
