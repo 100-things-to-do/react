@@ -51,8 +51,12 @@ function Auction() {
 
     useEffect(() => {
         getAuction(id, token, getResult)
+  
+    }, [])
+
+    useEffect(()=>{
         console.log(offerAdded)
-        if(offerAdded){
+        if(offerAdded === 'true'){
             toast.success('🦄 Offer added!', {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -62,10 +66,10 @@ function Auction() {
                 draggable: true,
                 progress: undefined,
                 });
-            setOfferAdded(false)
+            localStorage.setItem('offerAdded', false)
+            setOfferAdded(false)  
         }
-
-    }, [])
+    }, [offerAdded])
 
     return (
         <div className="row">
@@ -94,8 +98,6 @@ function Auction() {
                 draggable
                 pauseOnHover
                 />
-                {/* Same as */}
-            <ToastContainer />
 
         </div>
     );
