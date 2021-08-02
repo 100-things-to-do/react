@@ -14,7 +14,6 @@ function Auctions() {
     let tempAuctions = []
 
     const renderCard = (auction, index) => {
-            console.log(index)
             if(index !== 0 && index % 3 === 0){
                 const finalCardArray = cardArray
                 const src = IMG_URL + (auction.img ? auction.img : "empty.jpeg")

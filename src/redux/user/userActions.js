@@ -1,11 +1,6 @@
-import { FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT } from "./userTypes"
+import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT } from "./userTypes"
 import axios from 'axios'
 
-const fetchUserRequest = () => {
-    return {
-        type: FETCH_USER_REQUEST
-    }
-}
 
 const fetchUserSuccess = (token) => {
     return {
@@ -45,7 +40,6 @@ const userSignedOut = () => {
 
 const fetchUserToken = (data) => {
     return (dispatch) => {
-        dispatch(fetchUserRequest)
         axios.post('http://localhost:5000/users/signin', data)
         .then(response => {
             console.log(response)

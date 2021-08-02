@@ -1,8 +1,8 @@
-import { FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT } from "./userTypes"
+import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT } from "./userTypes"
 
 const initialState = {
-    loading: localStorage.getItem('loading') || false,
     token: localStorage.getItem('token') || '',
+    userId: localStorage.getItem('userId') || '',
     error: localStorage.getItem('error') || '',
     isUserValid: localStorage.getItem('isUserValid') || false,
     user: localStorage.getItem('user') || null
@@ -10,33 +10,22 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
     switch(action.type){
-        case FETCH_USER_REQUEST: {
-            localStorage.setItem('loading', true)
-            localStorage.setItem('isUserValid', false)
-            return{
-                ...state,
-                loading: true,
-                isUserValid: false
-            }
-        }
         case FETCH_USER_SUCCESS: {
-            localStorage.setItem('loading', false)
-            localStorage.setItem('token', action.payload)
+            localStorage.setItem('token', action.payload.token)
+            localStorage.setItem('userId', action.payload.user._id)
             localStorage.setItem('isUserValid', true)
             return {
                 ...state,
-                loading: false,
-                token: action.payload,
+                token: action.payload.token,
+                userId: action.payload.user._id,
                 isUserValid: true
             }
         }
         case FETCH_USER_FAILURE: {
-            localStorage.setItem('loading', false)
             localStorage.setItem('error', action.payload)
             localStorage.setItem('isUserValid', false)
             return {
                 ...state,
-                loading: false,
                 error: action.payload,
                 isUserValid: false
             }
@@ -60,13 +49,11 @@ const userReducer = (state = initialState, action) => {
             }
         }
         case USER_SIGNED_OUT: {
-            localStorage.setItem('loading', false)
             localStorage.setItem('token', '')
             localStorage.setItem('error', '')
             localStorage.setItem('isUserValid', false)
             localStorage.setItem('user', null)
             return {
-                loading: false,
                 token: '',
                 error: '',
                 isUserValid: false,
