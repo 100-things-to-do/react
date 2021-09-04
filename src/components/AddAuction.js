@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { postAuction } from '../requests/AuctionRequests';
 import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddAuction() {
     const token = useSelector(state => state.user.token)
@@ -9,11 +11,29 @@ function AddAuction() {
     const [closingPrice, setClosingPrice] = useState("")
     const [img, setImg] = useState("")
     
-    function dataPosted(isSuccess, auctionData){
+    function dataPosted(isSuccess, msg){
         if(isSuccess){
             console.log("data posted")
+            toast.success("Successfully added auction.", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
         }else{
-            console.log("error!")
+            console.log(msg)
+            toast.error(msg, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
         }
 
     }
@@ -66,6 +86,17 @@ function AddAuction() {
                 <button type="submit" className="btn btn-primary btn-block">Submit</button>
             </form>
             </div>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                />
         </div>
     );
 }

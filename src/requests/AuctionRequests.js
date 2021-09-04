@@ -13,7 +13,7 @@ export const postAuction = (data, token, callback) => {
         callback(true, auctionData)
     })
     .catch(error => {
-        callback(false, error.message)
+        callback(false, error.response.data)
     })        
 }
 
