@@ -3,6 +3,7 @@ import { postAuction } from '../requests/AuctionRequests';
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useHistory } from "react-router-dom";
 
 function AddAuction() {
     const token = useSelector(state => state.user.token)
@@ -10,19 +11,22 @@ function AddAuction() {
     const [startingPrice, setStartingPrice] = useState("")
     const [closingPrice, setClosingPrice] = useState("")
     const [img, setImg] = useState("")
+    const history = useHistory();
+   
     
+    // or auction
+    // TODO: take auction id from dataPosted() then redirect to auction with that id.
+    const redirectToAuction = (auctionId) =>{ 
+        history.push({
+            pathname: `auction/${auctionId}`,
+            state: {showToastTrue:true},
+            });
+      }
+
     function dataPosted(isSuccess, msg){
         if(isSuccess){
             console.log("data posted")
-            toast.success("Successfully added auction.", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                });
+            redirectToAuction(msg._id);    
         }else{
             console.log(msg)
             toast.error(msg, {
@@ -46,7 +50,9 @@ function AddAuction() {
         data.append('name', auctionName)
         data.append('startingPrice', startingPrice)
         data.append('closingPrice', closingPrice)
-        data.append('img', img)
+        if(img != ''){
+            data.append('img', img)
+        }
         postAuction(data, token, dataPosted)
     }
 

@@ -6,8 +6,10 @@ import './popup.css';
 import AddOfferPopup from './AddOfferPopup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useLocation } from 'react-router-dom';
 
 function Auction() {
+    const location = useLocation();
     const token = useSelector(state => state.user.token)
     const userId = useSelector(state => state.user.userId)
     let { id } = useParams()
@@ -18,6 +20,19 @@ function Auction() {
     const [offerAdded, setOfferAdded] = useState(localStorage.getItem('offerAdded') || false)
     const IMG_URL = "http://localhost:5000/"
     let tempOffers = []
+
+    const showSuccessfullyAddedAuction = () => {
+
+        toast.success("Successfully added auction.", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+    }
     
     function getResult(isSuccess, data){
         if(isSuccess){
@@ -51,7 +66,10 @@ function Auction() {
 
     useEffect(() => {
         getAuction(id, token, getResult)
-  
+        if(location.state.showToastTrue){
+            showSuccessfullyAddedAuction()
+            location.state.showToastTrue = false
+        }
     }, [])
 
     useEffect(()=>{
@@ -101,6 +119,8 @@ function Auction() {
 
         </div>
     );
+
+
 }
 
 export default Auction;
