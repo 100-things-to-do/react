@@ -12,17 +12,34 @@ import Auctions from './Auctions';
 import Auction from './Auction';
 
 
-const validUserNavItems = [
+const validUserNavItemsLeftAlign = [
   <li className="nav-item">
     <Link className="nav-link" to={"/auctions"}>Auctions</Link>
   </li>,
+  <li className="nav-item">
+    <Link className="nav-link" to={"/addAuction"}>Add Auction</Link>
+</li>,
+  <li className="nav-item">
+  <Link className="nav-link" to={"/addAuction"}>Add Credit</Link>
+</li>
+
+]
+
+const validUserNavItemsRightAlign = [
   <li className="nav-item">
     <Link className="nav-link" to={"/sign-out"}>Sign out</Link>
   </li>
 
 ]
 
-const nonValidUserNavItems = [
+const nonValidUserNavItemsLeftAlign = [
+  <li className="nav-item">
+    <Link className="nav-link" to={"/auctions"}>Auctions</Link>
+  </li>
+
+]
+
+const nonValidUserNavItemsRightAlign = [
   <li className="nav-item">
     <Link className="nav-link" to={"/sign-in"}>Login</Link>
   </li>,
@@ -31,6 +48,9 @@ const nonValidUserNavItems = [
   </li> 
 
 ]
+
+
+
 
 function App() {
   const isUserValid = useSelector(state => state.user.isUserValid)
@@ -41,7 +61,10 @@ function App() {
           <Link className="navbar-brand" to={"/"}>Oglet</Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
-              {isUserValid ? validUserNavItems : nonValidUserNavItems}
+              {isUserValid ? validUserNavItemsLeftAlign : nonValidUserNavItemsLeftAlign}
+            </ul>
+            <ul className="navbar-nav ms-auto">
+              {isUserValid ? validUserNavItemsRightAlign : nonValidUserNavItemsRightAlign}
             </ul>
           </div>
         </div>
