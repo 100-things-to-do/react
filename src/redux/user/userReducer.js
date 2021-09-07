@@ -1,4 +1,5 @@
 import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT } from "./userTypes"
+import produce from 'immer'
 
 const initialState = {
     token: localStorage.getItem('token') || '',
@@ -14,12 +15,12 @@ const userReducer = (state = initialState, action) => {
             localStorage.setItem('token', action.payload.token)
             localStorage.setItem('userId', action.payload.user._id)
             localStorage.setItem('isUserValid', true)
-            return {
-                ...state,
-                token: action.payload.token,
-                userId: action.payload.user._id,
-                isUserValid: true
-            }
+            const newState = produce(state, (draftState) => {
+                draftState.token = action.payload.token
+                draftState.userId = action.payload.user._id
+                draftState.isUserValid = true
+              })
+            return newState
         }
         case FETCH_USER_FAILURE: {
             localStorage.setItem('error', action.payload)
