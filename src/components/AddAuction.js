@@ -19,7 +19,7 @@ function AddAuction() {
     const redirectToAuction = (auctionId) =>{ 
         history.push({
             pathname: `auction/${auctionId}`,
-            state: {showToastTrue:true},
+            state: {showToastAuctionAdded:true},
             });
       }
 

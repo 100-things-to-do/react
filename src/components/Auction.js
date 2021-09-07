@@ -6,10 +6,11 @@ import './popup.css';
 import AddOfferPopup from './AddOfferPopup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory'
 
 function Auction() {
-    const location = useLocation();
+    var history = useHistory();
     const token = useSelector(state => state.user.token)
     const userId = useSelector(state => state.user.userId)
     let { id } = useParams()
@@ -21,8 +22,7 @@ function Auction() {
     const IMG_URL = "http://localhost:5000/"
     let tempOffers = []
 
-    const showSuccessfullyAddedAuction = () => {
-
+    const toastShowSuccessfullyAuctionAdded = () => {
         toast.success("Successfully added auction.", {
             position: "bottom-right",
             autoClose: 5000,
@@ -66,9 +66,12 @@ function Auction() {
 
     useEffect(() => {
         getAuction(id, token, getResult)
-        if(location.state.showToastTrue){
-            showSuccessfullyAddedAuction()
-            location.state.showToastTrue = false
+        if(history?.location?.state?.showToastAuctionAdded){
+            toastShowSuccessfullyAuctionAdded()
+            history = createHistory();
+            let state = { ...history.location.state };
+            delete state.showToastAuctionAdded;
+            history.replace({ ...history.location, state });            
         }
     }, [])
 
