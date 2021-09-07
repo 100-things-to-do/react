@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { getAllAuctions } from '../requests/AuctionRequests';
 import { useSelector } from 'react-redux';
-import Auction from './Auction';
 import { NavLink } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

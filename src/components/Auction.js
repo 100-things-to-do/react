@@ -31,26 +31,26 @@ function Auction() {
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            });
+        });
     }
-    
-    function getResult(isSuccess, data){
-        if(isSuccess){
+
+    function getResult(isSuccess, data) {
+        if (isSuccess) {
             setOwnerId(data.owner._id)
             const imgUrl = IMG_URL + (data.img ? data.img : "empty.jpeg")
             setAuction(
-                <div className="card" style={{width: 300, marginRight: 20}}>
-                    <img src={imgUrl} className="card-img-top" alt="..."/>
+                <div className="card" style={{ width: 300, marginRight: 20 }}>
+                    <img src={imgUrl} className="card-img-top" alt="..." />
                     <div className="card-body">
                         <h5 className="card-title">{data.name}</h5>
                         <p className="card-text">Starting price: {data.startingPrice}</p>
                         <p className="card-text">Closing price: {data.closingPrice}</p>
                     </div>
                 </div>
-                )
+            )
             data.offers.map(renderOffer)
             setOffers(tempOffers)
-        }else{
+        } else {
             console.log(data)
         }
     }
@@ -66,18 +66,18 @@ function Auction() {
 
     useEffect(() => {
         getAuction(id, token, getResult)
-        if(history?.location?.state?.showToastAuctionAdded){
+        if (history?.location?.state?.showToastAuctionAdded) {
             toastShowSuccessfullyAuctionAdded()
             history = createHistory();
             let state = { ...history.location.state };
             delete state.showToastAuctionAdded;
-            history.replace({ ...history.location, state });            
+            history.replace({ ...history.location, state });
         }
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(offerAdded)
-        if(offerAdded === 'true'){
+        if (offerAdded === 'true') {
             toast.success('🦄 Offer added!', {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -86,9 +86,9 @@ function Auction() {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                });
+            });
             localStorage.setItem('offerAdded', false)
-            setOfferAdded(false)  
+            setOfferAdded(false)
         }
     }, [offerAdded])
 
@@ -99,14 +99,14 @@ function Auction() {
             </div>
             <div className="p-4 mt-5 col-md-6">
                 <ul>
-                {offers}
+                    {offers}
                 </ul>
-                {userId === ownerId ? <button onClick={() => setTogglePopup(!togglePopup)} className="btn btn-primary">Make Offer</button> : <></>}
+                {userId !== ownerId ? <button onClick={() => setTogglePopup(!togglePopup)} className="btn btn-primary">Make Offer</button> : <></>}
             </div>
             {
-            togglePopup ? (
-                <AddOfferPopup auctionId={id} setOfferAdded={setOfferAdded}/>
-            ) : null
+                togglePopup ? (
+                    <AddOfferPopup auctionId={id} setOfferAdded={setOfferAdded} />
+                ) : null
             }
             <ToastContainer
                 position="bottom-right"
@@ -118,7 +118,7 @@ function Auction() {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
-                />
+            />
 
         </div>
     );

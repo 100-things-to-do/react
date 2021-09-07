@@ -50,7 +50,7 @@ function AddAuction() {
         data.append('name', auctionName)
         data.append('startingPrice', startingPrice)
         data.append('closingPrice', closingPrice)
-        if(img != ''){
+        if(img !== ''){
             data.append('img', img)
         }
         postAuction(data, token, dataPosted)
