@@ -5,7 +5,7 @@ const initialState = {
     token: localStorage.getItem('token') || '',
     userId: localStorage.getItem('userId') || '',
     error: localStorage.getItem('error') || '',
-    isUserValid: localStorage.getItem('isUserValid') || false,
+    isUserValid: JSON.parse(localStorage.getItem('isUserValid')) || false,
     user: localStorage.getItem('user') || null
 }
 
