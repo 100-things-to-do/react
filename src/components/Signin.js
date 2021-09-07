@@ -13,7 +13,6 @@ export default function Signin() {
         const data = new FormData(event.target);
         const userData = {}
         for (let key of data.keys()) {
-            console.log(key, data.get(key))
             if (key === 'username') {
                 userData.username = data.get(key)
             } else if (key === 'password') {
@@ -25,7 +24,6 @@ export default function Signin() {
 
 
     useEffect(() => {
-        console.log(token)
         if (token !== '') {
             history.push({
                 pathname: `auctions`,

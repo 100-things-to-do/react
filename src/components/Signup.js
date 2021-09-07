@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router";
 import { signUp } from "../redux";
 import { useHistory } from "react-router-dom";
 
@@ -30,7 +29,7 @@ export default function Signup() {
                 state: { showToastLoggedIn: true },
             });
         }
-    }, [token])
+    }, [token, history])
 
 
     return (
