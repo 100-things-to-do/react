@@ -42,7 +42,6 @@ const fetchUserToken = (data) => {
     return (dispatch) => {
         axios.post('http://localhost:5000/users/signin', data)
         .then(response => {
-            console.log(response)
             const users = response.data
             dispatch(fetchUserSuccess(users))
         })
@@ -71,11 +70,10 @@ const signUp = (data) => {
     return (dispatch) => {
         axios.post('http://localhost:5000/users/signup', data)
         .then(response => {
-            console.log(response)
-            const user = response.data
-            fetchUserToken(user)
+            dispatch(fetchUserToken(data))
         })
         .catch(error => {
+            console.log(error)
         })        
     }
 }

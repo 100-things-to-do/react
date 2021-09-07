@@ -55,7 +55,7 @@ function App() {
         <Route path="/auctions" component={Auctions}/>
         <Route path="/auction/:id" component={Auction}/>
         {isUserValid ? 
-          <Route path="/" component={AddAuction}/> 
+          <Route path="/" component={Auctions}/> 
           : <Route path="/" component={Signin}/>
         }
       </Switch>
