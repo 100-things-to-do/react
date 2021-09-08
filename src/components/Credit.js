@@ -18,11 +18,11 @@ export default function Credit() {
     const addCreditClicked = () => {
         const creditToAdd = 10
         addCredit(token, creditToAdd, addCreditCb)
-        dispatch(checkToken(token))
     }
 
     const addCreditCb = (isTrue, responseMsg) => {
-        console.log(responseMsg)
+        //This awaits addCredit axios function
+        dispatch(checkToken(token))
         toast.success(responseMsg, {
             position: "bottom-right",
             autoClose: 5000,
