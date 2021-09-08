@@ -91,4 +91,16 @@ const signUp = (data) => {
     }
 }
 
-export {fetchUserToken, checkToken, userSignedOut, signUp, resetErrorMsg, setErrorMsg}
+const addCredit = (token, credit, callback) => {
+    const data = {credit}
+    axios.post('http://localhost:5000/users/addCredit', data, { headers: {"Authorization" : `Bearer ${token}`} })
+    .then(response => {
+        const toastMsg = response.data
+        callback(true, toastMsg)
+    })
+    .catch(error => {
+
+    }) 
+}
+
+export {fetchUserToken, checkToken, userSignedOut, signUp, resetErrorMsg, setErrorMsg, addCredit}
