@@ -3,16 +3,20 @@ import { useEffect } from 'react';
 import { getAllAuctions } from '../requests/AuctionRequests';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory'
 
 function Auctions() {
     const [auctions, setAuctions] = useState([])
+    const token = useSelector(state => state.user.token)
     const IMG_URL = "http://localhost:5000/"
     let rowIndex = 0
     let cardArray = []
     let tempAuctions = []
 
+
+
+    useEffect(() => {
+        getAllAuctions(token, getResult)
+    }, [])
 
 
     const renderCard = (auction, index) => {
@@ -76,6 +80,8 @@ function Auctions() {
             console.log(data)
         }
     }
+
+    
 
 
 
