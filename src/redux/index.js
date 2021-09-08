@@ -1,1 +1,1 @@
-export { fetchUserToken, checkToken, userSignedOut, signUp } from './user/userActions'
+export { fetchUserToken, checkToken, userSignedOut, signUp, resetErrorMsg } from './user/userActions'

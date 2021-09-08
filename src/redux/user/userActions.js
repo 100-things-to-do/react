@@ -1,7 +1,11 @@
-import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT } from "./userTypes"
+import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT, RESET_ERROR_MSG } from "./userTypes"
 import axios from 'axios'
 
-
+const resetErrorMsg = () => {
+    return {
+        type: RESET_ERROR_MSG
+    }
+}
 const fetchUserSuccess = (token) => {
     return {
         type: FETCH_USER_SUCCESS,
@@ -44,10 +48,11 @@ const fetchUserToken = (data) => {
         .then(response => {
             const users = response.data
             dispatch(fetchUserSuccess(users))
+            console.log(users)
         })
         .catch(error => {
-            const errMsg = error.message
-            dispatch(fetchUserFailure(errMsg))
+            console.log(error.response.data)
+            dispatch(fetchUserFailure(error.response.data))
         })
     }
 }
@@ -78,4 +83,4 @@ const signUp = (data) => {
     }
 }
 
-export {fetchUserToken, checkToken, userSignedOut, signUp}
+export {fetchUserToken, checkToken, userSignedOut, signUp, resetErrorMsg}

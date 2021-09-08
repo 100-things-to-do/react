@@ -1,11 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserToken } from "../redux";
+import { fetchUserToken, resetErrorMsg } from "../redux";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Signin() {
     const history = useHistory()
     var token = useSelector(state => state.user.token)
+    var errorMsg = useSelector(state => state.user.error)
     const dispatch = useDispatch()
 
     const handleSubmit = (event) => {
@@ -22,6 +25,25 @@ export default function Signin() {
         dispatch(fetchUserToken(userData))
     }
 
+    const toastUserNotFound = () => {
+        toast.error(errorMsg, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+    }
+
+    useEffect(() => {
+        if(errorMsg !== ''){
+            toastUserNotFound()
+            dispatch(resetErrorMsg())
+            // Burada redux error messageini empty string yapabilirsin.
+        }
+    })
 
     useEffect(() => {
         if (token !== '') {
@@ -63,6 +85,17 @@ export default function Signin() {
                     </p>
                 </form>
             </div>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                />
         </div>
     );
 }
