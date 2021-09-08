@@ -69,10 +69,10 @@ const checkToken = (token) => {
     return (dispatch) => {
         axios.get('http://localhost:5000/users/whoami', { headers: {"Authorization" : `Bearer ${token}`} })
         .then(response => {
-            dispatch(tokenIsValid())
+            dispatch(tokenIsValid(response.data))
         })
         .catch(error => {
-            console.log(error.message)
+            console.log(error.response.data)
             dispatch(tokenIsNotValid())
         })
     }

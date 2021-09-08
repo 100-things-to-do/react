@@ -15,7 +15,6 @@ export default function Signup() {
         const data = new FormData(event.target);
         const userData = {}
         for (let key of data.keys()) {
-            console.log(key, data.get(key))
             if (key === 'username') {
                 userData.username = data.get(key)
             } else if (key === 'password') {

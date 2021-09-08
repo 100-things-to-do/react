@@ -10,6 +10,7 @@ import Signout from './Signout';
 import AddAuction from './AddAuction';
 import Auctions from './Auctions';
 import Auction from './Auction';
+import Credit from './Credit';
 
 
 const validUserNavItemsLeftAlign = [
@@ -20,7 +21,7 @@ const validUserNavItemsLeftAlign = [
     <Link className="nav-link" to={"/addAuction"}>Add Auction</Link>
 </li>,
   <li className="nav-item">
-  <Link className="nav-link" to={"/addAuction"}>Add Credit</Link>
+  <Link className="nav-link" to={"/credit"}>Add Credit</Link>
 </li>
 
 ]
@@ -49,8 +50,24 @@ const nonValidUserNavItemsRightAlign = [
 
 ]
 
+const validUserRoutes = [
+  
+  <Route path="/sign-out" component={Signout}/>,
+  <Route path="/addAuction" component={AddAuction}/>,
+  <Route path="/credit" component={Credit}/>,
+  <Route path="/" component={Auctions}/>,
+]
 
+const nonValidUserRoutes = [
+  <Route path="/sign-in" component={Signin} />,
+  <Route path="/sign-up" component={Signup} />,
+  <Route path="/" component={Signin}/>
+]
 
+const commonRoutes = [
+  <Route path="/auctions" component={Auctions}/>,
+  <Route path="/auction/:id" component={Auction}/>
+]
 
 function App() {
   const isUserValid = useSelector(state => state.user.isUserValid)
@@ -71,16 +88,8 @@ function App() {
       </nav>
 
       <Switch>
-        <Route path="/sign-in" component={Signin} />
-        <Route path="/sign-up" component={Signup} />
-        <Route path="/sign-out" component={Signout}/>
-        <Route path="/addAuction" component={AddAuction}/>
-        <Route path="/auctions" component={Auctions}/>
-        <Route path="/auction/:id" component={Auction}/>
-        {isUserValid ? 
-          <Route path="/" component={Auctions}/> 
-          : <Route path="/" component={Signin}/>
-        }
+        {isUserValid ? validUserRoutes : nonValidUserRoutes}
+        {commonRoutes}
       </Switch>
 
 
