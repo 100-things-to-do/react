@@ -53,21 +53,21 @@ const nonValidUserNavItemsRightAlign = [
 
 const validUserRoutes = [
   
-  <Route path="/sign-out" component={Signout}/>,
-  <Route path="/addAuction" component={AddAuction}/>,
-  <Route path="/credit" component={Credit}/>,
-  <Route path="/" component={Auctions}/>,
+  <Route exact path="/sign-out" component={Signout}/>,
+  <Route exact path="/addAuction" component={AddAuction}/>,
+  <Route exact path="/credit" component={Credit}/>,
+  <Route exact path="/" component={Auctions}/>,
 ]
 
 const nonValidUserRoutes = [
-  <Route path="/sign-in" component={Signin} />,
-  <Route path="/sign-up" component={Signup} />,
-  <Route path="/" component={Signin}/>
+  <Route exact path="/sign-in" component={Signin} />,
+  <Route exact path="/sign-up" component={Signup} />,
+  <Route exact path="/" component={Signin}/>
 ]
 
 const commonRoutes = [
-  <Route path="/auctions" component={Auctions}/>,
-  <Route path="/auction/:id" component={Auction}/>
+  <Route exact path="/auctions" component={Auctions}/>,
+  <Route exact path="/auction/:id" component={Auction}/>
 ]
 
 function App() {
