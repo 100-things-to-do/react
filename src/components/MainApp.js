@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './MainApp.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -11,7 +11,8 @@ import AddAuction from './AddAuction';
 import Auctions from './Auctions';
 import Auction from './Auction';
 import Credit from './Credit';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const validUserNavItemsLeftAlign = [
   <li className="nav-item">
@@ -71,6 +72,37 @@ const commonRoutes = [
 
 function App() {
   const isUserValid = useSelector(state => state.user.isUserValid)
+  const toastMsg = useSelector(state => state.user.toastMsg)
+  const toastMsgType = useSelector(state => state.user.toastMsgType)
+  //const toastMsgCount = useSelector(state => state.user.toastMsgCount) 
+
+  useEffect(() => {
+    if(toastMsg !== ''){
+      if(toastMsgType === 'success'){
+        toast.success(toastMsg, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      }else if(toastMsgType === 'error'){
+        toast.error(toastMsg, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      }
+    }
+  }, [toastMsg, toastMsgType])
+
+
   return (<Router>
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light fixed-top">
@@ -103,10 +135,17 @@ function App() {
           </p>
         </div>
       </div>
-
-
-
-
+      <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                />
     </div>
     </Router>
   );

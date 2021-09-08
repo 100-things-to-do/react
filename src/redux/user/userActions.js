@@ -1,18 +1,14 @@
-import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT, RESET_ERROR_MSG, SET_ERROR_MSG } from "./userTypes"
+import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT, RESET_ERROR_MSG, SET_TOAST_MSG } from "./userTypes"
 import axios from 'axios'
 
-const setErrorMsg = (error) => {
+const setToastMsg = (toastMsg, toastMsgType) => {
     return {
-        type: SET_ERROR_MSG,
-        payload: error
+        type: SET_TOAST_MSG,
+        toastMsg: toastMsg,
+        toastMsgType: toastMsgType
     }
 }
 
-const resetErrorMsg = () => {
-    return {
-        type: RESET_ERROR_MSG
-    }
-}
 const fetchUserSuccess = (token) => {
     return {
         type: FETCH_USER_SUCCESS,
@@ -41,9 +37,11 @@ const tokenIsNotValid = (error) => {
     }
 }
 
-const userSignedOut = () => {
+const userSignedOut = (toastMsg, toastMsgType) => {
     return {
-        type: USER_SIGNED_OUT
+        type: USER_SIGNED_OUT,
+        toastMsg: toastMsg,
+        toastMsgType: toastMsgType
     }
 }
 
@@ -55,11 +53,11 @@ const fetchUserToken = (data) => {
         .then(response => {
             const users = response.data
             dispatch(fetchUserSuccess(users))
-            console.log(users)
+            dispatch(setToastMsg('User logged in successfully!', 'success'))
         })
         .catch(error => {
-            console.log(error.response.data)
             dispatch(fetchUserFailure(error.response.data))
+            dispatch(setToastMsg(error.response.data, 'error'))
         })
     }
 }
@@ -86,21 +84,20 @@ const signUp = (data) => {
         })
         .catch(error => {
             console.log(error.response.data)
-            dispatch(setErrorMsg(error.response.data))
+            dispatch(setToastMsg(error.response.data, 'error'))
         })        
     }
 }
 
-const addCredit = (token, credit, callback) => {
+const addCredit = (token, credit) => {
     const data = {credit}
     axios.post('http://localhost:5000/users/addCredit', data, { headers: {"Authorization" : `Bearer ${token}`} })
     .then(response => {
         const toastMsg = response.data
-        callback(true, toastMsg)
     })
     .catch(error => {
 
     }) 
 }
 
-export {fetchUserToken, checkToken, userSignedOut, signUp, resetErrorMsg, setErrorMsg, addCredit}
+export {fetchUserToken, checkToken, userSignedOut, signUp, setToastMsg, addCredit}

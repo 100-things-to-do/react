@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { postAuction } from '../requests/AuctionRequests';
-import { useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
+import {setToastMsg} from "../redux"
 
 function AddAuction() {
     const token = useSelector(state => state.user.token)
@@ -12,6 +11,7 @@ function AddAuction() {
     const [closingPrice, setClosingPrice] = useState("")
     const [img, setImg] = useState("")
     const history = useHistory();
+    const dispatch = useDispatch()
    
     
     // or auction
@@ -19,25 +19,16 @@ function AddAuction() {
     const redirectToAuction = (auctionId) =>{ 
         history.push({
             pathname: `auction/${auctionId}`,
-            state: {showToastAuctionAdded:true},
             });
       }
 
     function dataPosted(isSuccess, msg){
         if(isSuccess){
-            console.log("data posted")
-            redirectToAuction(msg._id);    
+            redirectToAuction(msg._id); 
+            dispatch(setToastMsg('Successfully added auction!', 'success'))
         }else{
             console.log(msg)
-            toast.error(msg, {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                });
+            dispatch(setToastMsg(msg, 'error'))
         }
 
     }
@@ -92,17 +83,7 @@ function AddAuction() {
                 <button type="submit" className="btn btn-primary btn-block">Submit</button>
             </form>
             </div>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                />
+
         </div>
     );
 }

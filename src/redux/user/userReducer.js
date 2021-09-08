@@ -1,28 +1,22 @@
-import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT, RESET_ERROR_MSG, SET_ERROR_MSG } from "./userTypes"
+import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT, SET_TOAST_MSG } from "./userTypes"
 import produce from 'immer'
 
 const initialState = {
     token: localStorage.getItem('token') || '',
     userId: localStorage.getItem('userId') || '',
-    error: localStorage.getItem('error') || '',
     isUserValid: JSON.parse(localStorage.getItem('isUserValid')) || false,
-    user: localStorage.getItem('user') || null
+    user: localStorage.getItem('user') || null,
+    toastMsg: '',
+    toastMsgType: '',
 }
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
-        case RESET_ERROR_MSG: {
-            localStorage.setItem('error', '')
+        case SET_TOAST_MSG: {
             return {
                 ...state,
-                error: ''
-            }
-        }
-        case SET_ERROR_MSG: {
-            localStorage.setItem('error', action.payload)
-            return {
-                ...state,
-                error: action.payload
+                toastMsg: action.toastMsg,
+                toastMsgType: action.toastMsgType
             }
         }
         case FETCH_USER_SUCCESS: {
@@ -65,12 +59,12 @@ const userReducer = (state = initialState, action) => {
         }
         case USER_SIGNED_OUT: {
             localStorage.setItem('token', '')
-            localStorage.setItem('error', '')
             localStorage.setItem('isUserValid', false)
             localStorage.setItem('user', null)
             return {
                 token: '',
-                error: '',
+                toastMsg: action.toastMsg,
+                toastMsgType: action.toastMsgType,
                 isUserValid: false,
                 user: null
             }

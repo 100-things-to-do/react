@@ -8,8 +8,9 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Signup() {
     const history = useHistory()
     const token = useSelector(state => state.user.token)
-    const errorMsg = useSelector(state => state.user.error)
     const dispatch = useDispatch()
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.target);
@@ -21,20 +22,10 @@ export default function Signup() {
                 userData.password = data.get(key)
             }
         }
-        dispatch(signUp(userData))
+        dispatch(signUp(userData));
     }
 
-    const toastUsernameExists = () => {
-        toast.error(errorMsg, {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
-    }
+
 
     useEffect(() => {
         if (token !== '') {
@@ -43,14 +34,9 @@ export default function Signup() {
                 state: { showToastLoggedIn: true },
             });
         }
-    }, [token, history])
+    }, [token])
 
-    useEffect(() => {
-        if(errorMsg !== '') {
-            toastUsernameExists()
-            dispatch(resetErrorMsg())
-        }
-    }, [errorMsg])
+
 
     return (
         <div className="auth-wrapper">

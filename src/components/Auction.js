@@ -4,13 +4,10 @@ import { getAuction } from '../requests/AuctionRequests';
 import { useSelector } from 'react-redux';
 import './popup.css';
 import AddOfferPopup from './AddOfferPopup';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useHistory } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory'
+import {setToastMsg} from '../redux'
+
 
 function Auction() {
-    var history = useHistory();
     const token = useSelector(state => state.user.token)
     const userId = useSelector(state => state.user.userId)
     let { id } = useParams()
@@ -22,17 +19,6 @@ function Auction() {
     const IMG_URL = "http://localhost:5000/"
     let tempOffers = []
 
-    const toastShowSuccessfullyAuctionAdded = () => {
-        toast.success("Successfully added auction.", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
-    }
 
     function getResult(isSuccess, data) {
         if (isSuccess) {
@@ -66,27 +52,12 @@ function Auction() {
 
     useEffect(() => {
         getAuction(id, token, getResult)
-        if (history?.location?.state?.showToastAuctionAdded) {
-            toastShowSuccessfullyAuctionAdded()
-            history = createHistory();
-            let state = { ...history.location.state };
-            delete state.showToastAuctionAdded;
-            history.replace({ ...history.location, state });
-        }
     }, [])
 
     useEffect(() => {
         console.log(offerAdded)
         if (offerAdded === 'true') {
-            toast.success('🦄 Offer added!', {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            setToastMsg('🦄 Offer added!', 'success')
             localStorage.setItem('offerAdded', false)
             setOfferAdded(false)
         }
@@ -108,18 +79,6 @@ function Auction() {
                     <AddOfferPopup auctionId={id} setOfferAdded={setOfferAdded} />
                 ) : null
             }
-            <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
-
         </div>
     );
 

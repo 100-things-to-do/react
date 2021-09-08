@@ -5,16 +5,16 @@ import { userSignedOut } from '../redux';
 
 function Signout() {
     const history = useHistory()
+    const dispatch = useDispatch()
+
     useEffect(() => {
-        console.log("signedout")
-        dispatch(userSignedOut())
+        dispatch(userSignedOut("User logged out successfully!", 'success'))
         history.push({
-            pathname: `auctions`,
-            state: {showToastLoggedOut:true},
+            pathname: `sign-in`,
             });
     }, [])
 
-    const dispatch = useDispatch()
+
     return (
         <></>
     );
