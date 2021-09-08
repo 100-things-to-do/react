@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signUp } from "../redux";
+import { signUp, resetErrorMsg } from "../redux";
 import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Signup() {
     const history = useHistory()
     const token = useSelector(state => state.user.token)
+    const errorMsg = useSelector(state => state.user.error)
     const dispatch = useDispatch()
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -22,6 +25,18 @@ export default function Signup() {
         dispatch(signUp(userData))
     }
 
+    const toastUsernameExists = () => {
+        toast.error(errorMsg, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+    }
+
     useEffect(() => {
         if (token !== '') {
             history.push({
@@ -31,6 +46,12 @@ export default function Signup() {
         }
     }, [token, history])
 
+    useEffect(() => {
+        if(errorMsg !== '') {
+            toastUsernameExists()
+            dispatch(resetErrorMsg())
+        }
+    }, [errorMsg])
 
     return (
         <div className="auth-wrapper">
@@ -54,6 +75,17 @@ export default function Signup() {
                     </p>
                 </form>
             </div>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                />
         </div>
     );
 

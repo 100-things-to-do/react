@@ -1,4 +1,4 @@
-import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT, RESET_ERROR_MSG } from "./userTypes"
+import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT, RESET_ERROR_MSG, SET_ERROR_MSG } from "./userTypes"
 import produce from 'immer'
 
 const initialState = {
@@ -10,12 +10,19 @@ const initialState = {
 }
 
 const userReducer = (state = initialState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case RESET_ERROR_MSG: {
             localStorage.setItem('error', '')
             return {
                 ...state,
                 error: ''
+            }
+        }
+        case SET_ERROR_MSG: {
+            localStorage.setItem('error', action.payload)
+            return {
+                ...state,
+                error: action.payload
             }
         }
         case FETCH_USER_SUCCESS: {
@@ -26,7 +33,7 @@ const userReducer = (state = initialState, action) => {
                 draftState.token = action.payload.token
                 draftState.userId = action.payload.user._id
                 draftState.isUserValid = true
-              })
+            })
             return newState
         }
         case FETCH_USER_FAILURE: {
@@ -68,7 +75,7 @@ const userReducer = (state = initialState, action) => {
                 user: null
             }
         }
-        
+
         default: return state
     }
 }
