@@ -90,14 +90,19 @@ const signUp = (data) => {
 }
 
 const addCredit = (token, credit) => {
-    const data = {credit}
-    axios.post('http://localhost:5000/users/addCredit', data, { headers: {"Authorization" : `Bearer ${token}`} })
-    .then(response => {
-        const toastMsg = response.data
-    })
-    .catch(error => {
-
-    }) 
+    return (dispatch) => {
+        const data = {credit}
+        axios.post('http://localhost:5000/users/addCredit', data, { headers: {"Authorization" : `Bearer ${token}`} })
+        .then(response => {
+            const toastMsg = response.data
+            console.log(toastMsg)
+            dispatch(checkToken(token))
+            dispatch(setToastMsg(toastMsg, 'success'))
+        })
+        .catch(error => {
+            dispatch(setToastMsg(error.response.data, 'error'))
+        }) 
+    }
 }
 
 export {fetchUserToken, checkToken, userSignedOut, signUp, setToastMsg, addCredit}
