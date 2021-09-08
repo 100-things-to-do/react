@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { getAuction } from '../requests/AuctionRequests';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './popup.css';
 import AddOfferPopup from './AddOfferPopup';
 import {setToastMsg} from '../redux'
@@ -16,6 +16,7 @@ function Auction() {
     const [ownerId, setOwnerId] = useState(null)
     const [togglePopup, setTogglePopup] = useState(false)
     const [offerAdded, setOfferAdded] = useState(localStorage.getItem('offerAdded') || false)
+    const dispatch = useDispatch()
     const IMG_URL = "http://localhost:5000/"
     let tempOffers = []
 
@@ -56,9 +57,8 @@ function Auction() {
 
     useEffect(() => {
         console.log(offerAdded)
-        if (offerAdded === 'true') {
-            setToastMsg('🦄 Offer added!', 'success')
-            localStorage.setItem('offerAdded', false)
+        if (offerAdded === true) {
+            dispatch(setToastMsg('🦄 Offer added!', 'success'))
             setOfferAdded(false)
         }
     }, [offerAdded])
@@ -76,7 +76,7 @@ function Auction() {
             </div>
             {
                 togglePopup ? (
-                    <AddOfferPopup auctionId={id} setOfferAdded={setOfferAdded} />
+                    <AddOfferPopup auctionId={id} setOfferAdded={setOfferAdded} setTogglePopup={setTogglePopup} />
                 ) : null
             }
         </div>

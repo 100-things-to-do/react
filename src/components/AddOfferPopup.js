@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { postOffer } from '../requests/OfferRequests';
 import './popup.css';
 
-function AddOfferPopup(props) {
+function AddOfferPopup({setOfferAdded, auctionId, setTogglePopup}) {
     const token = useSelector(state => state.user.token)
     const [price, setPrice] = useState("")
     const [showError, setShowError] = useState(false)
@@ -11,12 +11,11 @@ function AddOfferPopup(props) {
 
     function handleSubmitCb(isSuccess, msg){
         if(isSuccess){
-            setShowError(false)
-            localStorage.setItem('offerAdded', true)
-            window.location.reload();
+            setShowError(!isSuccess)
+            setOfferAdded(isSuccess)
+            setTogglePopup(false)
         }else{
             setShowError(true)
-            console.log(msg)
             setErrorMsg(msg)
         }
 
@@ -26,7 +25,7 @@ function AddOfferPopup(props) {
         event.preventDefault();
         let data = new FormData();
         data.append('price', price)
-        postOffer(data, token, props.auctionId, handleSubmitCb)
+        postOffer(data, token, auctionId, handleSubmitCb)
     }
 
     return (
