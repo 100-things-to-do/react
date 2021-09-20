@@ -59,9 +59,11 @@ function Auction() {
         console.log(offerAdded)
         if (offerAdded === true) {
             dispatch(setToastMsg('🦄 Offer added!', 'success'))
+            getAuction(id, token, getResult)
             setOfferAdded(false)
         }
     }, [offerAdded])
+
 
     return (
         <div className="row">
