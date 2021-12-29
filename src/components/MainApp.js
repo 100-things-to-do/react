@@ -1,18 +1,14 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './MainApp.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useSelector } from 'react-redux'
 
-import Signin from "./Signin";
-import Signup from "./Signup";
-import Signout from './Signout';
-import AddAuction from './AddAuction';
-import Auctions from './Auctions';
-import Auction from './Auction';
 import Credit from './Credit';
+import Chart from './Chart';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 const validUserNavItemsLeftAlign = [
   <li className="nav-item">
@@ -20,10 +16,10 @@ const validUserNavItemsLeftAlign = [
   </li>,
   <li className="nav-item">
     <Link className="nav-link" to={"/addAuction"}>Add Auction</Link>
-</li>,
+  </li>,
   <li className="nav-item">
-  <Link className="nav-link" to={"/credit"}>Add Credit</Link>
-</li>
+    <Link className="nav-link" to={"/credit"}>Add Credit</Link>
+  </li>
 
 ]
 
@@ -47,29 +43,30 @@ const nonValidUserNavItemsRightAlign = [
   </li>,
   <li className="nav-item">
     <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
-  </li> 
+  </li>
 
 ]
 
 const validUserRoutes = [
-  
-  <Route exact path="/sign-out" component={Signout}/>,
-  <Route exact path="/addAuction" component={AddAuction}/>,
-  <Route exact path="/credit" component={Credit}/>,
-  <Route exact path="/" component={Auctions}/>,
+
+  <Route exact path="/sign-out" component={Signout} />,
+  <Route exact path="/addAuction" component={AddAuction} />,
+  <Route exact path="/credit" component={Credit} />,
+  <Route exact path="/" component={Auctions} />,
 ]
 
 const nonValidUserRoutes = [
   <Route exact path="/sign-in" component={Signin} />,
   <Route exact path="/sign-up" component={Signup} />,
-  <Route exact path="/" component={Signin}/>
+  <Route exact path="/" component={Signin} />
 ]
 
 const commonRoutes = [
-  <Route exact path="/auctions" component={Auctions}/>,
-  <Route exact path="/auction/:id" component={Auction}/>
+  <Route exact path="/auctions" component={Auctions} />,
+  <Route exact path="/auction/:id" component={Auction} />
 ]
 
+// toasts and routes.
 function App() {
   const isUserValid = useSelector(state => state.user.isUserValid)
   const toastMsg = useSelector(state => state.user.toastMsg)
@@ -77,8 +74,8 @@ function App() {
   //const toastMsgCount = useSelector(state => state.user.toastMsgCount) 
 
   useEffect(() => {
-    if(toastMsg !== ''){
-      if(toastMsgType === 'success'){
+    if (toastMsg !== '') {
+      if (toastMsgType === 'success') {
         toast.success(toastMsg, {
           position: "bottom-right",
           autoClose: 5000,
@@ -87,8 +84,8 @@ function App() {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
-      }else if(toastMsgType === 'error'){
+        });
+      } else if (toastMsgType === 'error') {
         toast.error(toastMsg, {
           position: "bottom-right",
           autoClose: 5000,
@@ -97,7 +94,7 @@ function App() {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
+        });
       }
     }
   }, [toastMsg, toastMsgType])
@@ -116,6 +113,7 @@ function App() {
               {isUserValid ? validUserNavItemsRightAlign : nonValidUserNavItemsRightAlign}
             </ul>
           </div>
+
         </div>
       </nav>
 
@@ -124,30 +122,29 @@ function App() {
         {commonRoutes}
       </Switch>
 
-
-
+      <Chart />
       <div className="card bg-secondary border-0 vbottom">
         <div className="card-body text-light text-center">
-          <h5 className="card-title text-white display-4" style={{fontSize:30}}>Telif Hakkı</h5>
+          <h5 className="card-title text-white display-4" style={{ fontSize: 30 }}>Telif Hakkı</h5>
           <p className="d-inline lead">Tüm Hakları Saklıdır © 2018
-          <br/>
-          <a href="#" className="text-light d-block lead">Blog</a>
+            <br />
+            <a href="#" className="text-light d-block lead">Blog</a>
           </p>
         </div>
       </div>
       <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                />
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
-    </Router>
+  </Router>
   );
 }
 
