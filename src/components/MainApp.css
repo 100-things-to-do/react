@@ -88,3 +88,7 @@ html,
   top: 100%;
   transform: translateY(-100%);
 }
+
+#content{
+  padding-top: 55px;
+}

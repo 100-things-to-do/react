@@ -48,22 +48,12 @@ const nonValidUserNavItemsRightAlign = [
 ]
 
 const validUserRoutes = [
-
-  <Route exact path="/sign-out" component={Signout} />,
-  <Route exact path="/addAuction" component={AddAuction} />,
   <Route exact path="/credit" component={Credit} />,
-  <Route exact path="/" component={Auctions} />,
 ]
 
-const nonValidUserRoutes = [
-  <Route exact path="/sign-in" component={Signin} />,
-  <Route exact path="/sign-up" component={Signup} />,
-  <Route exact path="/" component={Signin} />
-]
+
 
 const commonRoutes = [
-  <Route exact path="/auctions" component={Auctions} />,
-  <Route exact path="/auction/:id" component={Auction} />
 ]
 
 // toasts and routes.
@@ -118,19 +108,11 @@ function App() {
       </nav>
 
       <Switch>
-        {isUserValid ? validUserRoutes : nonValidUserRoutes}
+        {isUserValid ? validUserRoutes : []}
         {commonRoutes}
       </Switch>
-
-      <Chart />
-      <div className="card bg-secondary border-0 vbottom">
-        <div className="card-body text-light text-center">
-          <h5 className="card-title text-white display-4" style={{ fontSize: 30 }}>Telif Hakkı</h5>
-          <p className="d-inline lead">Tüm Hakları Saklıdır © 2018
-            <br />
-            <a href="#" className="text-light d-block lead">Blog</a>
-          </p>
-        </div>
+      <div id="content">
+        <Chart />
       </div>
       <ToastContainer
         position="bottom-right"
