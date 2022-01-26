@@ -105,19 +105,16 @@ function App() {
 
   return (<Router>
     <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-        <div className="container">
-          <Link className="navbar-brand" to={"/"}>Oglet</Link>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
-              {isUserValid ? validUserNavItemsLeftAlign : nonValidUserNavItemsLeftAlign}
-            </ul>
-            <ul className="navbar-nav ms-auto">
-              {isUserValid ? validUserNavItemsRightAlign : nonValidUserNavItemsRightAlign}
-            </ul>
-          </div>
+      <div className="container">
+        <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul className="navbar-nav ml-auto">
+            {isUserValid ? validUserNavItemsLeftAlign : nonValidUserNavItemsLeftAlign}
+          </ul>
+          <ul className="navbar-nav ms-auto">
+            {isUserValid ? validUserNavItemsRightAlign : nonValidUserNavItemsRightAlign}
+          </ul>
         </div>
-      </nav>
+      </div>
 
       <Switch>
         {isUserValid ? validUserRoutes : nonValidUserRoutes}
@@ -128,10 +125,10 @@ function App() {
 
       <div className="card bg-secondary border-0 vbottom">
         <div className="card-body text-light text-center">
-          <h5 className="card-title text-white display-4" style={{ fontSize: 30 }}>Telif Hakkı</h5>
-          <p className="d-inline lead">Tüm Hakları Saklıdır © 2018
+          <h5 className="card-title text-white display-4" style={{ fontSize: 30 }}></h5>
+          <p className="d-inline lead">© 2022
             <br />
-            <a href="#" className="text-light d-block lead">Blog</a>
+            <a href="#" className="text-light d-block lead"></a>
           </p>
         </div>
       </div>
