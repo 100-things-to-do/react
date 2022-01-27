@@ -30,7 +30,7 @@ export default function Signin() {
     useEffect(() => {
         if (token !== '') {
             history.push({
-                pathname: `auctions`,
+                pathname: `cardboard`,
             });
         }
     }, [token])

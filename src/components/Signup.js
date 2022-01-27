@@ -28,7 +28,7 @@ export default function Signup() {
     useEffect(() => {
         if (token !== '') {
             history.push({
-                pathname: `auctions`,
+                pathname: `cardboard`,
                 state: { showToastLoggedIn: true },
             });
         }

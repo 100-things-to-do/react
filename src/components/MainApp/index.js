@@ -1,28 +1,19 @@
 import React, { useEffect } from 'react';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './MainApp.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useSelector } from 'react-redux'
 
-import Signin from "./Signin";
-import Signup from "./Signup";
-import Signout from './Signout';
-import AddAuction from './AddAuction';
-import Auctions from './Auctions';
-import Auction from './Auction';
-import Credit from './Credit';
+import Signin from "../Signin";
+import Signup from "../Signup";
+import Signout from '../Signout';
+import Cardboard from '../Cardboard';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const validUserNavItemsLeftAlign = [
   <li className="nav-item">
-    <Link className="nav-link" to={"/auctions"}>Auctions</Link>
-  </li>,
-  <li className="nav-item">
-    <Link className="nav-link" to={"/addAuction"}>Add Auction</Link>
-  </li>,
-  <li className="nav-item">
-    <Link className="nav-link" to={"/credit"}>Add Credit</Link>
+    <Link className="nav-link" to={"/cardboard"}>Cardboard</Link>
   </li>
 
 ]
@@ -36,7 +27,7 @@ const validUserNavItemsRightAlign = [
 
 const nonValidUserNavItemsLeftAlign = [
   <li className="nav-item">
-    <Link className="nav-link" to={"/auctions"}>Auctions</Link>
+    <Link className="nav-link" to={"/cardboard"}>Cardboard</Link>
   </li>
 
 ]
@@ -54,20 +45,17 @@ const nonValidUserNavItemsRightAlign = [
 const validUserRoutes = [
 
   <Route exact path="/sign-out" component={Signout} />,
-  <Route exact path="/addAuction" component={AddAuction} />,
-  <Route exact path="/credit" component={Credit} />,
-  <Route exact path="/" component={Auctions} />,
+  <Route exact path="/" component={Cardboard} />,
 ]
 
 const nonValidUserRoutes = [
   <Route exact path="/sign-in" component={Signin} />,
   <Route exact path="/sign-up" component={Signup} />,
-  <Route exact path="/" component={Auctions} />
+  <Route exact path="/" component={Cardboard} />
 ]
 
 const commonRoutes = [
-  <Route exact path="/auctions" component={Auctions} />,
-  <Route exact path="/auction/:id" component={Auction} />
+  <Route exact path="/cardboard" component={Cardboard} />
 ]
 
 function App() {
