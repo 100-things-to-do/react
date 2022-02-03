@@ -8,6 +8,7 @@ import Signin from "../Signin";
 import Signup from "../Signup";
 import Signout from '../Signout';
 import DomainSelector from '../DomainSelector';
+import Domain from '../Domain'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -51,7 +52,8 @@ const validUserRoutes = [
 const nonValidUserRoutes = [
   <Route exact path="/sign-in" component={Signin} />,
   <Route exact path="/sign-up" component={Signup} />,
-  <Route exact path="/" component={DomainSelector} />
+  <Route exact path="/" component={DomainSelector} />,
+  <Route exact path="/domain" component={Domain} />
 ]
 
 const commonRoutes = [
