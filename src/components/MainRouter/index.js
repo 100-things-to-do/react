@@ -7,13 +7,13 @@ import { useSelector } from 'react-redux'
 import Signin from "../Signin";
 import Signup from "../Signup";
 import Signout from '../Signout';
-import Cardboard from '../Cardboard';
+import DomainSelector from '../DomainSelector';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const validUserNavItemsLeftAlign = [
   <li className="nav-item">
-    <Link className="nav-link" to={"/cardboard"}>Cardboard</Link>
+    <Link className="nav-link" to={"/domain-selector"}>Domain Selector</Link>
   </li>
 
 ]
@@ -27,7 +27,7 @@ const validUserNavItemsRightAlign = [
 
 const nonValidUserNavItemsLeftAlign = [
   <li className="nav-item">
-    <Link className="nav-link" to={"/cardboard"}>Cardboard</Link>
+    <Link className="nav-link" to={"/domain-selector"}>Domain Selector</Link>
   </li>
 
 ]
@@ -45,20 +45,20 @@ const nonValidUserNavItemsRightAlign = [
 const validUserRoutes = [
 
   <Route exact path="/sign-out" component={Signout} />,
-  <Route exact path="/" component={Cardboard} />,
+  <Route exact path="/" component={DomainSelector} />,
 ]
 
 const nonValidUserRoutes = [
   <Route exact path="/sign-in" component={Signin} />,
   <Route exact path="/sign-up" component={Signup} />,
-  <Route exact path="/" component={Cardboard} />
+  <Route exact path="/" component={DomainSelector} />
 ]
 
 const commonRoutes = [
-  <Route exact path="/cardboard" component={Cardboard} />
+  <Route exact path="/domain-selector" component={DomainSelector} />
 ]
 
-function App() {
+function MainRouter() {
   const isUserValid = useSelector(state => state.user.isUserValid)
   const toastMsg = useSelector(state => state.user.toastMsg)
   const toastMsgType = useSelector(state => state.user.toastMsgType)
@@ -136,4 +136,4 @@ function App() {
   );
 }
 
-export default App;
+export default MainRouter;
