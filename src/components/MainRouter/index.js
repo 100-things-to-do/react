@@ -53,7 +53,7 @@ const nonValidUserRoutes = [
   <Route exact path="/sign-in" component={Signin} />,
   <Route exact path="/sign-up" component={Signup} />,
   <Route exact path="/" component={DomainSelector} />,
-  <Route exact path="/domain" component={Domain} />
+  <Route exact path="/domain/:id" component={Domain} />
 ]
 
 const commonRoutes = [

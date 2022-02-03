@@ -6,9 +6,12 @@ import "./Domain.css";
 import curtain from './curtain.jpeg';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import { useParams } from 'react-router';
+
 
 function Domain() {
     const [cards, setCards] = useState([])
+    const { id } = useParams(); // this is defined in path(mainRouter)
     const token = useSelector(state => state.user.token)
     let cardArray = []
     let tempCards = []

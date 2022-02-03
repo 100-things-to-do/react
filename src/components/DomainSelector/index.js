@@ -10,6 +10,7 @@ function DomainSelector() {
         <div>
             <DropdownButton id="dropdown-basic-button" title="Dropdown button">
                 <Dropdown.Item href="/domain/1">First Domain</Dropdown.Item>
+                <Dropdown.Item href="/domain/2">Second Domain</Dropdown.Item>
             </DropdownButton>
         </div>
     )
