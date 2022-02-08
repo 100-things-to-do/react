@@ -30,7 +30,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "PORT=3333 react-scripts start",
+    "start": "HOST=http://127.0.0.1 PORT=3333 react-scripts start",
     "startless": "concurrently --kill-others \"less-watch-compiler --config less-watcher.config.json\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
