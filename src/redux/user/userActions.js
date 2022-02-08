@@ -1,5 +1,6 @@
 import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT, RESET_ERROR_MSG, SET_TOAST_MSG } from "./userTypes"
 import axios from 'axios'
+import { expressUrl } from '../../common-util';
 
 const setToastMsg = (toastMsg, toastMsgType) => {
     return {
@@ -49,60 +50,60 @@ const userSignedOut = (toastMsg, toastMsgType) => {
 
 const fetchUserToken = (data) => {
     return (dispatch) => {
-        axios.post('http://localhost:5000/users/signin', data)
-        .then(response => {
-            const users = response.data
-            dispatch(fetchUserSuccess(users))
-            dispatch(setToastMsg('User logged in successfully!', 'success'))
-        })
-        .catch(error => {
-            dispatch(fetchUserFailure(error.response.data))
-            dispatch(setToastMsg(error.response.data, 'error'))
-        })
+        axios.post(expressUrl + '/users/signin', data)
+            .then(response => {
+                const users = response.data
+                dispatch(fetchUserSuccess(users))
+                dispatch(setToastMsg('User logged in successfully!', 'success'))
+            })
+            .catch(error => {
+                dispatch(fetchUserFailure(error.response.data))
+                dispatch(setToastMsg(error.response.data, 'error'))
+            })
     }
 }
 
 
 const checkToken = (token) => {
     return (dispatch) => {
-        axios.get('http://localhost:5000/users/whoami', { headers: {"Authorization" : `Bearer ${token}`} })
-        .then(response => {
-            dispatch(tokenIsValid(response.data))
-        })
-        .catch(error => {
-            console.log(error.response.data)
-            dispatch(tokenIsNotValid())
-        })
+        axios.get(expressUrl + '/users/whoami', { headers: { "Authorization": `Bearer ${token}` } })
+            .then(response => {
+                dispatch(tokenIsValid(response.data))
+            })
+            .catch(error => {
+                console.log(error.response.data)
+                dispatch(tokenIsNotValid())
+            })
     }
 }
 
 const signUp = (data) => {
     return (dispatch) => {
-        axios.post('http://localhost:5000/users/signup', data)
-        .then(response => {
-            dispatch(fetchUserToken(data))
-        })
-        .catch(error => {
-            console.log(error.response.data)
-            dispatch(setToastMsg(error.response.data, 'error'))
-        })        
+        axios.post(expressUrl + '/users/signup', data)
+            .then(response => {
+                dispatch(fetchUserToken(data))
+            })
+            .catch(error => {
+                console.log(error.response.data)
+                dispatch(setToastMsg(error.response.data, 'error'))
+            })
     }
 }
 
 const addCredit = (token, credit) => {
     return (dispatch) => {
-        const data = {credit}
-        axios.post('http://localhost:5000/users/addCredit', data, { headers: {"Authorization" : `Bearer ${token}`} })
-        .then(response => {
-            const toastMsg = response.data
-            console.log(toastMsg)
-            dispatch(checkToken(token))
-            dispatch(setToastMsg(toastMsg, 'success'))
-        })
-        .catch(error => {
-            dispatch(setToastMsg(error.response.data, 'error'))
-        }) 
+        const data = { credit }
+        axios.post(expressUrl + '/users/addCredit', data, { headers: { "Authorization": `Bearer ${token}` } })
+            .then(response => {
+                const toastMsg = response.data
+                console.log(toastMsg)
+                dispatch(checkToken(token))
+                dispatch(setToastMsg(toastMsg, 'success'))
+            })
+            .catch(error => {
+                dispatch(setToastMsg(error.response.data, 'error'))
+            })
     }
 }
 
-export {fetchUserToken, checkToken, userSignedOut, signUp, setToastMsg, addCredit}
+export { fetchUserToken, checkToken, userSignedOut, signUp, setToastMsg, addCredit }

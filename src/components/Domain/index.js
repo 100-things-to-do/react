@@ -84,7 +84,7 @@ function Domain() {
     const renderCard = (card, curtainId) => {
         let curtain1Id = `curtain${indexx++}`;
         let curtain2Id = `curtain${indexx++}`;
-        const backgroundImage = card && card.image ? `url(http://localhost:5000/${card.image})` : null;
+        const backgroundImage = card && card.image ? `url(http://localhost:6666/${card.image})` : null;
         cardArray.push(
             <Col lg={4} md={6} xs={12} >
                 <div id="effect" style={{ width: 200, backgroundSize: '200px 225px', backgroundImage: backgroundImage }} onClick={() => curtainClickEvent(curtainId)}>

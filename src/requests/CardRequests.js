@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { expressUrl } from '../common-util';
+
 
 export const createCard = (data, callback) => {
     const header = {
@@ -6,7 +8,7 @@ export const createCard = (data, callback) => {
             "Content-Type": 'multipart/form-data'
         }
     }
-    axios.post(`http://localhost:5000/cards/`, data, header)
+    axios.post(expressUrl + `/cards/`, data, header)
         .then(response => {
             const auctionData = response.data
             callback(true, auctionData)
@@ -17,8 +19,7 @@ export const createCard = (data, callback) => {
 }
 
 export const getDomainCards = (domainId, callback) => {
-    console.log("asdasfas")
-    axios.get(`http://localhost:5000/cards/${domainId}`)
+    axios.get(expressUrl + `/cards/${domainId}`)
         .then(response => {
             const auctionData = response.data
             callback(true, auctionData)

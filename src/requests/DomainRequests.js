@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { expressUrl } from '../common-util';
 
 
 
 export const createDomain = (bodyData, callback) => {
     axios({
         method: 'post',
-        url: `http://localhost:5000/domains/`,
+        url: expressUrl + `/domains/`,
         data: bodyData,
     }).then(response => {
         const auctionData = response.data
@@ -19,7 +20,7 @@ export const createDomain = (bodyData, callback) => {
 export const getDomains = (callback) => {
     axios({
         method: 'get',
-        url: `http://localhost:5000/domains/`,
+        url: expressUrl + `/domains/`,
     }).then(response => {
         const auctionData = response.data
         callback(true, auctionData)
