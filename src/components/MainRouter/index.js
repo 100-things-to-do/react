@@ -113,15 +113,7 @@ function MainRouter() {
 
 
 
-      <div className="card bg-secondary border-0 vbottom">
-        <div className="card-body text-light text-center">
-          <h5 className="card-title text-white display-4" style={{ fontSize: 30 }}></h5>
-          <p className="d-inline lead">© 2022
-            <br />
-            <a href="#" className="text-light d-block lead"></a>
-          </p>
-        </div>
-      </div>
+
       <ToastContainer
         position="bottom-right"
         autoClose={5000}

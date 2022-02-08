@@ -30,8 +30,8 @@ function DomainModal({ setModalVisible }) {
 
 
     return (
-        <Modal show={true}>
-            <Modal.Header>Create Domain</Modal.Header>
+        <Modal show={true} onHide={() => setModalVisible(false)}>
+            <Modal.Header closeButton>Create Domain</Modal.Header>
             <Modal.Body>
                 <div className="auth-wrapper">
                     <div className="auth-inner">
@@ -61,10 +61,6 @@ function DomainModal({ setModalVisible }) {
                     </div>
                 </div>
             </Modal.Body>
-            <Modal.Footer>
-                <button>Cancel</button>
-                <button>Save</button>
-            </Modal.Footer>
         </Modal>
     )
 }

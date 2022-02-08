@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row'
 import { useParams } from 'react-router';
 import { Switch } from '@mui/material';
 import CardModal from "../CardModal";
+import { getDomainCards } from '../../requests/CardRequests'
 
 function Domain() {
     const { id } = useParams(); // this is defined in path(mainRouter)
@@ -16,11 +17,11 @@ function Domain() {
     let cardArray = []
     let tempCards = []
     let indexx = 0;
-    const [cards, setCards] = useState([])
     const [checked, _setChecked] = useState(false);
     const [curtainState, _setCurtainState] = useState({})
     const [modalVisible, setModalVisible] = useState(false)
     const [cardId, setCardId] = useState(0);
+    const [cards, setCards] = useState([]);
 
     const curtainStateRef = useRef(curtainState);
     const setCurtainState = (data) => {
@@ -33,24 +34,26 @@ function Domain() {
         _setChecked(data);
     };
 
-    function initCurtainState(input) {
+    function initCurtainState(domainSize) {
         const initialCurtainState = {};
-        for (const num in input) {
-            initialCurtainState[num * 2] = 'closed';
+        for (let i = 0; i < domainSize; i++) {
+            initialCurtainState[i * 2] = 'closed';
         }
         return initialCurtainState;
     }
 
+    const getDomainCardsCb = (resultStatus, domainCards) => {
+        if (resultStatus) {
+            console.log("domainCards", domainCards);
+            setCurtainState(initCurtainState(domainCards.length));
+            renderCards(domainCards);
+        } else {
+            console.log("error");
+        }
+    }
+
     useEffect(() => {
-        console.log("new Curtain", curtainState)
-    }, [curtainState])
-
-
-
-    useEffect(() => {
-        let input = [1, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-        setCurtainState(initCurtainState(input));
-        renderCards(true, input);
+        getDomainCards(id, getDomainCardsCb)
     }, [])
 
     const curtainClickEvent = (index) => {
@@ -59,19 +62,19 @@ function Domain() {
             setCardId(index);
             setModalVisible(true);
         } else {
+            console.log("index", index)
             openCloseCurtain(index * 2, setCurtainState)
         }
     }
 
-    const renderCard = (curtainId, index) => {
+    const renderCard = (card, curtainId) => {
         let curtain1Id = `curtain${indexx++}`;
         let curtain2Id = `curtain${indexx++}`;
-        console.log(indexx);
+        const backgroundImage = card && card.image ? `url(http://localhost:5000/${card.image})` : null;
         cardArray.push(
             <Col lg={4} md={6} xs={12} >
-                <div id="effect" style={{ width: 200 }} onClick={() => curtainClickEvent(index)}
-                >
-                    <p>{curtainId}</p>
+                <div id="effect" style={{ width: 200, backgroundSize: '200px 225px', backgroundImage: backgroundImage }} onClick={() => curtainClickEvent(curtainId)}>
+                    <p>{card && card.text ? card.text : curtainId}</p>
                     <img src={curtain} alt={curtain1Id} id={curtain1Id} className="left-curtain" style={{ width: 100 }} />
                     <img src={curtain} alt={curtain2Id} id={curtain2Id} className="right-curtain" style={{ width: 100 }} />
                 </div>
@@ -80,19 +83,15 @@ function Domain() {
     }
 
 
-    function renderCards(isSuccess, data) {
-        if (isSuccess) {
-            data.forEach(renderCard);
-            tempCards.push(
-                <Row>
-                    {cardArray}
-                </Row>
-            )
-            setCards(tempCards)
-        }
-        else {
-            console.log(data)
-        }
+    function renderCards(cards) {
+        cards.forEach(renderCard);
+        tempCards.push(
+            <Row>
+                {cardArray}
+            </Row>
+        )
+        console.log(tempCards)
+        setCards(tempCards)
     }
 
 
