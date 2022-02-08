@@ -4,24 +4,23 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { createCard } from '../../requests/CardRequests';
-
+import { setToastMsg } from '../../redux'
+import { useSelector, useDispatch } from 'react-redux';
 
 
 function CardModal({ domainId, cardId, setModalVisible }) {
-    const [isOpen, setIsOpen] = useState(true);
     const [activityText, setActivityText] = useState("");
     const [img, setImg] = useState("");
+    const dispatch = useDispatch()
 
 
     function createCardCb(isSuccess, msg) {
         setModalVisible(false);
-
         if (isSuccess) {
             console.log("success");
-            //dispatch(setToastMsg('Successfully added auction!', 'success'))
+            dispatch(setToastMsg('🦄 Successfully added card!', 'success'))
         } else {
-            console.log(msg)
-            //dispatch(setToastMsg(msg, 'error'))
+            dispatch(setToastMsg(msg, 'error'))
         }
 
     }

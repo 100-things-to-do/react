@@ -4,9 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import axios from 'axios';
-
-
-
+import { setToastMsg } from '../../redux'
+import { useSelector, useDispatch } from 'react-redux';
 import { createDomain } from '../../requests/DomainRequests';
 
 
@@ -14,9 +13,11 @@ import { createDomain } from '../../requests/DomainRequests';
 function DomainModal({ setModalVisible }) {
     const [name, setName] = useState(null);
     const [size, setSize] = useState(null);
+    const dispatch = useDispatch()
 
     const createDomainCb = () => {
-        console.log("createDomainCb");
+        setModalVisible(false);
+        dispatch(setToastMsg('🦄 Domain added!', 'success'))
     }
 
     const handleSubmit = async (event) => {

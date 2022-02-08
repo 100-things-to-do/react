@@ -4,6 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DomainModal from '../DomainModal';
 import { getDomains } from '../../requests/DomainRequests'
 
+
 function DomainSelector() {
     const [modalVisible, setModalVisible] = useState(false);
     const [domains, setDomains] = useState([]);
@@ -15,7 +16,6 @@ function DomainSelector() {
             setDomains(domains.map((domain) => {
                 return <Dropdown.Item href={`/domain/${domain.id}`}>{domain.name}</Dropdown.Item >
             }))
-
         }
     }
 
