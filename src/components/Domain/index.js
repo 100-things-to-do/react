@@ -22,6 +22,7 @@ function Domain() {
     const [modalVisible, setModalVisible] = useState(false)
     const [cardId, setCardId] = useState(0);
     const [cards, setCards] = useState([]);
+    const [domainCardsLength, setDomainCardsLength] = useState(0);
 
     const curtainStateRef = useRef(curtainState);
     const setCurtainState = (data) => {
@@ -34,18 +35,22 @@ function Domain() {
         _setChecked(data);
     };
 
-    function initCurtainState(domainSize) {
+    function getInitialCurtainState(domainSize, isOpen) {
         const initialCurtainState = {};
         for (let i = 0; i < domainSize; i++) {
-            initialCurtainState[i * 2] = 'closed';
+            if (isOpen) {
+                initialCurtainState[i * 2] = 'opened';
+            } else {
+                initialCurtainState[i * 2] = 'closed';
+            }
         }
         return initialCurtainState;
     }
 
     const getDomainCardsCb = (resultStatus, domainCards) => {
         if (resultStatus) {
-            console.log("domainCards", domainCards);
-            setCurtainState(initCurtainState(domainCards.length));
+            setDomainCardsLength(domainCards.length);
+            setCurtainState(getInitialCurtainState(domainCards.length, false));
             renderCards(domainCards);
         } else {
             console.log("error");
@@ -56,13 +61,22 @@ function Domain() {
         getDomainCards(id, getDomainCardsCb)
     }, [])
 
+    useEffect(() => {
+        if (checked) {
+            setCurtainState(getInitialCurtainState(domainCardsLength, true))
+            changeAllCurtainStatus(true)
+
+        } else {
+            setCurtainState(getInitialCurtainState(domainCardsLength, false))
+            changeAllCurtainStatus(false);
+        }
+    }, [checked])
+
     const curtainClickEvent = (index) => {
-        console.log(checkedRef.current)
         if (checkedRef.current) {
             setCardId(index);
             setModalVisible(true);
         } else {
-            console.log("index", index)
             openCloseCurtain(index * 2, setCurtainState)
         }
     }
@@ -94,6 +108,20 @@ function Domain() {
         setCards(tempCards)
     }
 
+    function changeAllCurtainStatus(willOpen) {
+        for (var i = 0; i < domainCardsLength * 2; i += 2) {
+            let curtain1 = `#curtain${i}`
+            let curtain2 = `#curtain${i + 1}`
+            if (willOpen) {
+                $(curtain1).animate({ width: 20 }, 1000);
+                $(curtain2).animate({ width: 20 }, 1000);
+            } else {
+                $(curtain1).animate({ width: 200 }, 1000);
+                $(curtain2).animate({ width: 200 }, 1000);
+            }
+
+        }
+    }
 
     function openCloseCurtain(id, setCurtainState) {
         let curtain1 = `#curtain${id}`
