@@ -1,18 +1,38 @@
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
-import Domain from '../Domain'
+import DomainModal from '../DomainModal';
+import { getDomains } from '../../requests/DomainRequests'
 
 function DomainSelector() {
+    const [modalVisible, setModalVisible] = useState(false);
+    const [domains, setDomains] = useState([]);
 
 
+
+    const getDomainsCb = (resultBoolean, domains) => {
+        if (resultBoolean) {
+            setDomains(domains.map((domain) => {
+                return <Dropdown.Item href={`/domain/${domain.id}`}>{domain.name}</Dropdown.Item >
+            }))
+
+        }
+    }
+
+    useEffect(() => {
+        getDomains(getDomainsCb);
+    }, []);
     return (
         <div>
+            {modalVisible ?
+                <DomainModal setModalVisible={setModalVisible} /> : null
+            }
             <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-                <Dropdown.Item href="/domain/1">First Domain</Dropdown.Item>
-                <Dropdown.Item href="/domain/2">Second Domain</Dropdown.Item>
+                {domains}
             </DropdownButton>
+            <button onClick={() => setModalVisible(true)}>Add Domain</button>
         </div>
+
     )
 }
 
