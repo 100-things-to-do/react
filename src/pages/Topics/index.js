@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import { useParams } from 'react-router';
 import { Switch } from '@mui/material';
-import CardModal from "../CardModal";
+import CardModal from "../Activities/Modal";
 import { getDomainCards } from '../../requests/CardRequests'
 
 function Domain() {

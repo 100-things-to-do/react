@@ -3,8 +3,8 @@ import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { createCard } from '../../requests/CardRequests';
-import { setToastMsg } from '../../redux'
+import { createCard } from '../../../requests/CardRequests';
+import { setToastMsg } from '../../../redux'
 import { useSelector, useDispatch } from 'react-redux';
 
 

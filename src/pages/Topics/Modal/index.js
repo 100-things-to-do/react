@@ -4,9 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import axios from 'axios';
-import { setToastMsg } from '../../redux'
+import { setToastMsg } from '../../../redux'
 import { useSelector, useDispatch } from 'react-redux';
-import { createDomain } from '../../requests/DomainRequests';
+import { createDomain } from '../../../requests/DomainRequests';
 
 
 

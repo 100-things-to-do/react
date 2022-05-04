@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './MainApp.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useSelector } from 'react-redux'
 
-import Signin from "../Signin";
-import Signup from "../Signup";
-import Signout from '../Signout';
-import DomainSelector from '../DomainSelector';
-import Domain from '../Domain'
+import Signin from "../others/Signin";
+import Signup from "../others/Signup";
+import Signout from '../others/Signout';
+import DomainSelector from '../others';
+import Domain from '../pages/Topics'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

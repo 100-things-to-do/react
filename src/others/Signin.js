@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signUp } from "../redux";
-import { useHistory } from "react-router-dom";
+import { fetchUserToken } from "../redux";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom"
 
-export default function Signup() {
+export default function Signin() {
     const history = useHistory()
-    const token = useSelector(state => state.user.token)
+    var token = useSelector(state => state.user.token)
     const dispatch = useDispatch()
-
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -20,8 +19,11 @@ export default function Signup() {
                 userData.password = data.get(key)
             }
         }
-        dispatch(signUp(userData));
+        dispatch(fetchUserToken(userData))
     }
+
+
+
 
 
 
@@ -29,18 +31,17 @@ export default function Signup() {
         if (token !== '') {
             history.push({
                 pathname: `cardboard`,
-                state: { showToastLoggedIn: true },
             });
         }
     }, [token])
-
 
 
     return (
         <div className="auth-wrapper">
             <div className="auth-inner">
                 <form onSubmit={handleSubmit}>
-                    <h3>Sign Up</h3>
+
+                    <h3>Sign In</h3>
 
                     <div className="form-group">
                         <label>Username</label>
@@ -52,13 +53,20 @@ export default function Signup() {
                         <input name="password" type="password" className="form-control" placeholder="Enter password" />
                     </div>
 
-                    <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                    <div className="form-group">
+                        <div className="custom-control custom-checkbox">
+                            <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                            <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" className="btn btn-primary btn-block">Submit</button>
                     <p className="forgot-password text-right">
-                        Already registered <a href="/">sign in?</a>
+                        Forgot <a href="/src/others">password?</a>
                     </p>
                 </form>
             </div>
+
         </div>
     );
-
 }

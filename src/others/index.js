@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
-import DomainModal from '../DomainModal';
-import { getDomains } from '../../requests/DomainRequests'
+import DomainModal from '../pages/Topics/Modal';
+import { getDomains } from '../requests/DomainRequests'
 
 
 function DomainSelector() {
