@@ -62,7 +62,7 @@ export default function Signin() {
 
                     <button type="submit" className="btn btn-primary btn-block">Submit</button>
                     <p className="forgot-password text-right">
-                        Forgot <a href="/src/others">password?</a>
+                        Forgot <a href="/src/pages/Topics">password?</a>
                     </p>
                 </form>
             </div>

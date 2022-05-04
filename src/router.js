@@ -1,63 +1,30 @@
 import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './MainApp.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useSelector } from 'react-redux'
 
-import Signin from "../others/Signin";
-import Signup from "../others/Signup";
-import Signout from '../others/Signout';
-import DomainSelector from '../others';
-import Domain from '../pages/Topics'
+import Signin from "./others/Signin";
+import Signup from "./others/Signup";
+import Signout from './others/Signout';
+import Topics from './pages/Topics';
+import Categories from './pages/Categories'
+import Activities from "./pages/Activities";
+import Navbar from './navbar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-const validUserNavItemsLeftAlign = [
-  <li className="nav-item">
-    <Link className="nav-link" to={"/domain-selector"}>Domain Selector</Link>
-  </li>
-
-]
-
-const validUserNavItemsRightAlign = [
-  <li className="nav-item">
-    <Link className="nav-link" to={"/sign-out"}>Sign out</Link>
-  </li>
-
-]
-
-const nonValidUserNavItemsLeftAlign = [
-  <li className="nav-item">
-    <Link className="nav-link" to={"/domain-selector"}>Domain Selector</Link>
-  </li>
-
-]
-
-const nonValidUserNavItemsRightAlign = [
-  <li className="nav-item">
-    <Link className="nav-link" to={"/sign-in"}>Login</Link>
-  </li>,
-  <li className="nav-item">
-    <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
-  </li>
-
-]
 
 const validUserRoutes = [
 
   <Route exact path="/sign-out" component={Signout} />,
-  <Route exact path="/" component={DomainSelector} />,
+  <Route exact path="/" component={Topics} />,
 ]
 
 const nonValidUserRoutes = [
   <Route exact path="/sign-in" component={Signin} />,
   <Route exact path="/sign-up" component={Signup} />,
-  <Route exact path="/" component={DomainSelector} />,
-  <Route exact path="/domain/:id" component={Domain} />
-]
-
-const commonRoutes = [
-  <Route exact path="/domain-selector" component={DomainSelector} />
+  <Route exact path="/" component={Topics} />,
+  <Route exact path="/topics/:topicId/categories" component={Categories} />,
+  <Route exact path="/topics/:topicId/categories/:categoryId/activities" component={Activities} />
 ]
 
 function MainRouter() {
@@ -96,19 +63,10 @@ function MainRouter() {
   return (<Router>
     <div className="App">
       <div className="container">
-        <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-          <ul className="navbar-nav ml-auto">
-            {isUserValid ? validUserNavItemsLeftAlign : nonValidUserNavItemsLeftAlign}
-          </ul>
-          <ul className="navbar-nav ms-auto">
-            {isUserValid ? validUserNavItemsRightAlign : nonValidUserNavItemsRightAlign}
-          </ul>
-        </div>
+      <Navbar/>
       </div>
-
       <Switch>
         {isUserValid ? validUserRoutes : nonValidUserRoutes}
-        {commonRoutes}
       </Switch>
 
 

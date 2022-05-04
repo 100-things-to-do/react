@@ -1,6 +1,6 @@
 import { FETCH_USER_SUCCESS, FETCH_USER_FAILURE, TOKEN_IS_VALID, TOKEN_IS_NOT_VALID, USER_SIGNED_OUT, RESET_ERROR_MSG, SET_TOAST_MSG } from "./userTypes"
 import axios from 'axios'
-import { expressUrl } from '../../common-util';
+import { expressUrl } from '../../others/common-util';
 
 const setToastMsg = (toastMsg, toastMsgType) => {
     return {

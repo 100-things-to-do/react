@@ -5,18 +5,18 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { setToastMsg } from '../../../redux'
 import { useSelector, useDispatch } from 'react-redux';
-import { createTopic } from '../../../requests/TopicRequests';
+import { createCategory } from '../../../requests/CategoryRequests';
 
 
 
-function TopicModal({ setModalVisible }) {
+function CategoryModal({ setModalVisible, topicId }) {
     const [name, setName] = useState(null);
     const [size, setSize] = useState(null);
     const dispatch = useDispatch()
 
-    const createTopicCb = () => {
+    const createCategoryCb = () => {
         setModalVisible(false);
-        dispatch(setToastMsg('🦄 Topic added!', 'success'))
+        dispatch(setToastMsg('🦄 Category added!', 'success'))
     }
 
     const handleSubmit = async (event) => {
@@ -25,13 +25,13 @@ function TopicModal({ setModalVisible }) {
             name,
             size
         }
-        createTopic(bodyData, createTopicCb);
+        createCategory(topicId, bodyData, createCategoryCb);
     }
 
 
     return (
         <Modal show={true} onHide={() => setModalVisible(false)}>
-            <Modal.Header closeButton>Create Domain</Modal.Header>
+            <Modal.Header closeButton>Create Category</Modal.Header>
             <Modal.Body>
                 <div className="auth-wrapper">
                     <div className="auth-inner">
@@ -42,7 +42,7 @@ function TopicModal({ setModalVisible }) {
                                         <label>Name</label>
                                     </Col>
                                     <Col md={6}>
-                                        <input name="name" type="text" className="form-control" placeholder="Enter topic name" onChange={e => setName(e.target.value)} />
+                                        <input name="name" type="text" className="form-control" placeholder="Enter category name" onChange={e => setName(e.target.value)} />
                                     </Col>
                                 </Row>
                             </div>
@@ -55,4 +55,4 @@ function TopicModal({ setModalVisible }) {
     )
 }
 
-export default TopicModal;
+export default CategoryModal;
