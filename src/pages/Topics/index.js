@@ -3,7 +3,6 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import TopicModal from './Modal';
 import { getTopics } from '../../requests/TopicRequests'
-import './style.css'
 
 function Topics() {
     const [modalVisible, setModalVisible] = useState(false);

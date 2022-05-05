@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import $ from "jquery";
-import "./Domain.css";
 import curtain from './curtain.jpeg';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
@@ -11,6 +10,7 @@ import { Switch } from '@mui/material';
 import CardModal from "./Modal";
 import { getActivities } from '../../requests/ActivityRequest'
 import { getCategory } from '../../requests/CategoryRequests'
+require("./Domain.css");
 
 function Activities() {
     const { topicId, categoryId } = useParams(); // this is defined in path(mainRouter)
@@ -103,7 +103,7 @@ function Activities() {
         const backgroundImage = card && card.image ? `url(http://localhost:6666/${card.image})` : null;
         cardArray.push(
             <Col lg={4} md={6} xs={12} >
-                <div topicId="effect" style={{ width: 200, backgroundSize: '200px 225px', backgroundImage: backgroundImage }} onClick={() => curtainClickEvent(curtainId)}>
+                <div topicId="effect" style={{ width: 100, backgroundSize: '200px 225px', backgroundImage: backgroundImage }} onClick={() => curtainClickEvent(curtainId)}>
                     <p>{card && card.text ? card.text : curtainId}</p>
                     <img src={curtain} alt={curtain1Id} topicId={curtain1Id} className="left-curtain" style={{ width: 100 }} />
                     <img src={curtain} alt={curtain2Id} topicId={curtain2Id} className="right-curtain" style={{ width: 100 }} />
@@ -161,7 +161,7 @@ function Activities() {
 
 
     return (
-        <div style={{ width: '60%' }}>
+        <div>
             {
                category ? `Category - ${category.name}` : null
             }
