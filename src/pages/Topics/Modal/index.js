@@ -5,13 +5,12 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { setToastMsg } from '../../../redux'
 import { useSelector, useDispatch } from 'react-redux';
-import { createTopic } from '../../../requests/TopicRequests';
+import  TopicAPI  from '../../../apis/TopicAPI';
 
 
 
 function TopicModal({ setModalVisible }) {
     const [name, setName] = useState(null);
-    const [size, setSize] = useState(null);
     const dispatch = useDispatch()
 
     const createTopicCb = () => {
@@ -23,9 +22,8 @@ function TopicModal({ setModalVisible }) {
         event.preventDefault();
         const bodyData = {
             name,
-            size
         }
-        createTopic(bodyData, createTopicCb);
+        TopicAPI.createTopic(bodyData, createTopicCb);
     }
 
 

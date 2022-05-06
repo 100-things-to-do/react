@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import CategoryModal from './Modal';
-import { getCategories } from '../../requests/CategoryRequests'
-import { getTopic } from '../../requests/TopicRequests'
+import CategoryAPI from '../../apis/CategoryAPI'
+import TopicAPI  from '../../apis/TopicAPI'
 import {useParams} from "react-router-dom";
 
 
@@ -14,8 +14,8 @@ function Categories() {
     const [topic, setTopic] = useState([]);
 
     useEffect(() => {
-        getCategories(topicId, getCategoriesCb);
-        getTopic(topicId, getTopicCb);
+        CategoryAPI.getCategories(topicId, getCategoriesCb);
+        TopicAPI.getTopic(topicId, getTopicCb);
     }, []);
 
     const getTopicCb = (resultBoolean, topic) => {

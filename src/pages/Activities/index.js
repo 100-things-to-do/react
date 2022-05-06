@@ -8,8 +8,8 @@ import Row from 'react-bootstrap/Row'
 import { useParams } from 'react-router';
 import { Switch } from '@mui/material';
 import CardModal from "./Modal";
-import { getActivities } from '../../requests/ActivityRequest'
-import { getCategory } from '../../requests/CategoryRequests'
+import ActivityAPI from '../../apis/ActivityAPI'
+import CategoryAPI from '../../apis/CategoryAPI'
 require("./Domain.css");
 
 function Activities() {
@@ -37,8 +37,8 @@ function Activities() {
     };
 
     useEffect(() => {
-        getActivities(topicId, categoryId, getActivitiesCb)
-        getCategory(topicId, categoryId, getCategoryCb);
+        ActivityAPI.getActivities(topicId, categoryId, getActivitiesCb)
+        CategoryAPI.getCategory(topicId, categoryId, getCategoryCb);
     }, [])
 
     const getCategoryCb = (resultStatus, category) => {

@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { createActivity } from '../../../requests/ActivityRequest';
+import ActivityAPI from '../../../apis/ActivityAPI';
 import { setToastMsg } from '../../../redux'
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -38,7 +38,7 @@ function CardModal({ domainId, cardId, setModalVisible }) {
         for (var pair of formData.entries()) {
             console.log(pair[0] + ', ' + pair[1]);
         }
-        createActivity(formData, createCardCb);
+        ActivityAPI.createActivity(formData, createCardCb);
     }
 
     return (

@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { setToastMsg } from '../../../redux'
 import { useSelector, useDispatch } from 'react-redux';
-import { createCategory } from '../../../requests/CategoryRequests';
+import CategoryAPI from '../../../apis/CategoryAPI';
 
 
 
@@ -25,7 +25,7 @@ function CategoryModal({ setModalVisible, topicId }) {
             name,
             size
         }
-        createCategory(topicId, bodyData, createCategoryCb);
+        CategoryAPI.createCategory(topicId, bodyData, createCategoryCb);
     }
 
 

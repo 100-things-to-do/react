@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import TopicModal from './Modal';
-import { getTopics } from '../../requests/TopicRequests'
+import TopicAPI from '../../apis/TopicAPI'
 
 function Topics() {
     const [modalVisible, setModalVisible] = useState(false);
@@ -10,7 +10,7 @@ function Topics() {
 
     useEffect(() => {
         console.log("topics")
-        getTopics(getTopicsCb);
+        TopicAPI.getTopics(getTopicsCb);
     }, []);
 
     const getTopicsCb = (resultBoolean, topics) => {
