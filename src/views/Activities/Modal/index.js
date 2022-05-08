@@ -4,17 +4,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ActivityAPI from '../../../apis/ActivityAPI';
-import { setToastMsg } from '../../../redux'
-import { useSelector, useDispatch } from 'react-redux';
+import {setToastMsg} from '../../../redux'
+import {useSelector, useDispatch} from 'react-redux';
 
 
-function CardModal({ topicId, categoryId, modalActivity, setModalVisible }) {
+function CardModal({topicId, categoryId, modalActivity, setModalVisible}) {
     const [activityText, setActivityText] = useState("");
     const [img, setImg] = useState("");
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if(modalActivity){
+        if (modalActivity) {
             setActivityText(modalActivity.name)
         }
     }, [])
@@ -50,17 +50,19 @@ function CardModal({ topicId, categoryId, modalActivity, setModalVisible }) {
             console.log(pair[0] + ', ' + pair[1]);
         }
         console.log(formData);
-        if(modalActivity){
+        if (modalActivity) {
             ActivityAPI.updateActivity(topicId, categoryId, modalActivity._id, formData, updateActivityCb);
 
-        }else {
+        } else {
             ActivityAPI.createActivity(topicId, categoryId, formData, createActivityCb);
         }
     }
 
     return (
         <Modal show={true} onHide={() => setModalVisible(false)}>
-            <Modal.Header closeButton></Modal.Header>
+            <Modal.Header closeButton>
+                <span className="thick">{modalActivity ? "Update Activity" : "Create Activity"}</span>
+            </Modal.Header>
             <Modal.Body>
                 <div className="auth-wrapper">
                     <div className="auth-inner">
@@ -71,7 +73,8 @@ function CardModal({ topicId, categoryId, modalActivity, setModalVisible }) {
                                         <label>Activity Text</label>
                                     </Col>
                                     <Col md={6}>
-                                        <input name="name" type="text" className="form-control" value={activityText} placeholder="Name" onChange={e => setActivityText(e.target.value)} />
+                                        <input name="name" type="text" className="form-control" value={activityText}
+                                               placeholder="Name" onChange={e => setActivityText(e.target.value)}/>
                                     </Col>
                                 </Row>
                             </div>
@@ -83,7 +86,8 @@ function CardModal({ topicId, categoryId, modalActivity, setModalVisible }) {
 
                                     </Col>
                                     <Col md={6}>
-                                        <input type="file" name="image" filename="image"  className="form-control-file" onChange={e => setImg(e.target.files[0])} />
+                                        <input type="file" name="image" filename="image" className="form-control-file"
+                                               onChange={e => setImg(e.target.files[0])}/>
                                     </Col>
                                 </Row>
                             </div>

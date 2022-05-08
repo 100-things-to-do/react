@@ -3,6 +3,7 @@ import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import $ from "jquery";
 import curtain from '../../assets/curtain.jpeg';
+import cross from '../../assets/cross2.png'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import {useParams} from 'react-router';
@@ -17,10 +18,11 @@ require("./index.css");
 
 export default function Activities() {
     const {topicId, categoryId} = useParams(); // this is defined in path(mainRouter)
-    const [isAdmin, _setIsAdmin] = useState(false);
+    const [isAdmin, _setIsAdmin] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalActivity, setModalActivity] = useState({});
     const [activitiesToBeRendered, setActivitiesToBeRendered] = useState([]);
+    const [isActivitiesRendered, setIsActivitiesRendered] = useState(false);
     const isAdminRef = useRef(isAdmin);
     const setIsAdmin = (data) => {
         isAdminRef.current = data;
@@ -32,17 +34,21 @@ export default function Activities() {
     }, [])
 
     useEffect(() => {
-        if(isAdmin){
-            setActivitiesToBeRendered(activitiesToBeRendered => [...activitiesToBeRendered, null]);
-        }else{
-            setActivitiesToBeRendered(activitiesToBeRendered.filter(activity => activity != null));
+        if(isActivitiesRendered){
+            if (isAdmin) {
+                setActivitiesToBeRendered(activitiesToBeRendered => [...activitiesToBeRendered, null]);
+            } else {
+                setActivitiesToBeRendered(activitiesToBeRendered.filter(activity => activity != null));
+            }
         }
-    }, [isAdmin])
+
+    }, [isAdmin, isActivitiesRendered])
 
     const getActivitiesCb = (resultStatus, activities) => {
         if (resultStatus) {
             console.log(activities)
             setActivitiesToBeRendered(activities)
+            setIsActivitiesRendered(true)
         } else {
             console.log("error");
         }
@@ -52,23 +58,24 @@ export default function Activities() {
     return (
         <div>
             {modalVisible ?
-                <CardModal topicId={topicId} categoryId={categoryId} modalActivity={modalActivity} setModalVisible={setModalVisible}/> : null
+                <CardModal topicId={topicId} categoryId={categoryId} modalActivity={modalActivity}
+                           setModalVisible={setModalVisible}/> : null
             }
-            <div className="parent">
+            <div className="header-container">
                 <CategoryHeader topicId={topicId} categoryId={categoryId}/>
                 <AdminPanel isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>
             </div>
-            <div className="parent">
+            <span>&nbsp;&nbsp;</span>
+            <div className="activities-container">
                 {
                     activitiesToBeRendered.map((activity, index) =>
-                            <Activity
-                                isAdmin={isAdmin}
-                                activity={activity}
-                                index={index}
-                                setModalActivity={setModalActivity}
-                                setModalVisible={setModalVisible}
-                            />
-
+                        <Activity
+                            isAdmin={isAdmin}
+                            activity={activity}
+                            index={index}
+                            setModalActivity={setModalActivity}
+                            setModalVisible={setModalVisible}
+                        />
                     )
                 }
             </div>
@@ -97,7 +104,7 @@ function CategoryHeader({topicId, categoryId}) {
     return (
         <div className="child">
             {
-                category ? `Category - ${category.name}` : null
+                category ? `Category Name : ${category.name}` : null
             }
         </div>
     )
@@ -122,7 +129,7 @@ function AdminPanel({isAdmin, setIsAdmin}) {
 
 function Activity({isAdmin, activity, index, setModalActivity, setModalVisible}) {
     const backgroundImage = activity && activity.image ? `url(http://localhost:6666/${activity.image})` : null;
-    const backgroundColor = activity ? null : "black";
+    const backgroundColor = activity ? "#0AA1DD" : "black";
     const [isOpen, setIsOpen] = useState(false);
 
     function curtainClickEvent() {
@@ -140,9 +147,17 @@ function Activity({isAdmin, activity, index, setModalActivity, setModalVisible})
         <div key={index} className="activity-container"
              style={{backgroundSize: '200px 225px', backgroundImage: backgroundImage, backgroundColor: backgroundColor}}
              onClick={() => curtainClickEvent()}>
-
-            <p>{activity && activity.text ? activity.text : index}</p>
+            {activity && activity.image ?
+                <div className="inner-container">
+                    <img src={activity.image} key={index}
+                          className="activity-image"/>
+                    <p>Activity Name: {activity && activity.name ? activity.name : index}</p>
+                </div>
+                :
+                <img src={cross} key={index} alt={index}
+                     className="image-overlay plus-sign"/>
+            }
             <img src={curtain} key={index} alt={index}
-                 className={isAdmin || isOpen ? "curtain-invisible" : "curtain-visible"}/>
+                 className={"image-overlay " + (isAdmin || isOpen ? "curtain-invisible" : "curtain-visible")}/>
         </div>)
 }
