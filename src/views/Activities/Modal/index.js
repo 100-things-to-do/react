@@ -8,7 +8,7 @@ import {setToastMsg} from '../../../redux'
 import {useSelector, useDispatch} from 'react-redux';
 
 
-function CardModal({topicId, categoryId, modalActivity, setModalVisible}) {
+function ActivityModal({topicId, categoryId, modalActivity, setModalVisible, setIsNewActivity}) {
     const [activityText, setActivityText] = useState("");
     const [img, setImg] = useState("");
     const dispatch = useDispatch()
@@ -27,6 +27,7 @@ function CardModal({topicId, categoryId, modalActivity, setModalVisible}) {
         } else {
             dispatch(setToastMsg(msg, 'error'))
         }
+        setIsNewActivity(true);
     }
 
     function updateActivityCb(isSuccess, msg) {
@@ -37,6 +38,7 @@ function CardModal({topicId, categoryId, modalActivity, setModalVisible}) {
         } else {
             dispatch(setToastMsg(msg, 'error'))
         }
+        setIsNewActivity(true);
     }
 
     const handleSubmit = (event) => {
@@ -115,4 +117,4 @@ function CardModal({topicId, categoryId, modalActivity, setModalVisible}) {
 }
 
 
-export default CardModal;
+export default ActivityModal;

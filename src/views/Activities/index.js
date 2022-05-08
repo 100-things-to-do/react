@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import {useParams} from 'react-router';
 import {Switch} from '@mui/material';
-import CardModal from "./Modal";
+import ActivityModal from "./Modal";
 import ActivityAPI from '../../apis/ActivityAPI'
 import CategoryAPI from '../../apis/CategoryAPI'
 
@@ -23,6 +23,7 @@ export default function Activities() {
     const [modalActivity, setModalActivity] = useState({});
     const [activitiesToBeRendered, setActivitiesToBeRendered] = useState([]);
     const [isActivitiesRendered, setIsActivitiesRendered] = useState(false);
+    const [isNewActivity, setIsNewActivity] = useState(false);
     const isAdminRef = useRef(isAdmin);
     const setIsAdmin = (data) => {
         isAdminRef.current = data;
@@ -34,12 +35,20 @@ export default function Activities() {
     }, [])
 
     useEffect(() => {
+        if(isNewActivity){
+            ActivityAPI.getActivities(topicId, categoryId, getActivitiesCb);
+            setIsNewActivity(false);
+        }
+    }, [isNewActivity])
+
+    useEffect(() => {
         if(isActivitiesRendered){
             if (isAdmin) {
                 setActivitiesToBeRendered(activitiesToBeRendered => [...activitiesToBeRendered, null]);
             } else {
                 setActivitiesToBeRendered(activitiesToBeRendered.filter(activity => activity != null));
             }
+            setIsActivitiesRendered(false);
         }
 
     }, [isAdmin, isActivitiesRendered])
@@ -58,8 +67,13 @@ export default function Activities() {
     return (
         <div>
             {modalVisible ?
-                <CardModal topicId={topicId} categoryId={categoryId} modalActivity={modalActivity}
-                           setModalVisible={setModalVisible}/> : null
+                <ActivityModal
+                    topicId={topicId}
+                    categoryId={categoryId}
+                    modalActivity={modalActivity}
+                    setModalVisible={setModalVisible}
+                    setIsNewActivity={setIsNewActivity}
+                /> : null
             }
             <div className="header-container">
                 <CategoryHeader topicId={topicId} categoryId={categoryId}/>
