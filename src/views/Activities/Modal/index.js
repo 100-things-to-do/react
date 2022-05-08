@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from 'react-bootstrap/Row'
@@ -8,42 +8,59 @@ import { setToastMsg } from '../../../redux'
 import { useSelector, useDispatch } from 'react-redux';
 
 
-function CardModal({ domainId, cardId, setModalVisible }) {
+function CardModal({ topicId, categoryId, modalActivity, setModalVisible }) {
     const [activityText, setActivityText] = useState("");
     const [img, setImg] = useState("");
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        if(modalActivity){
+            setActivityText(modalActivity.name)
+        }
+    }, [])
 
-    function createCardCb(isSuccess, msg) {
+    function createActivityCb(isSuccess, msg) {
         setModalVisible(false);
         if (isSuccess) {
             console.log("success");
-            dispatch(setToastMsg('🦄 Successfully added card!', 'success'))
+            dispatch(setToastMsg('🦄 Successfully added activity!', 'success'))
         } else {
             dispatch(setToastMsg(msg, 'error'))
         }
+    }
 
+    function updateActivityCb(isSuccess, msg) {
+        setModalVisible(false);
+        if (isSuccess) {
+            console.log("success");
+            dispatch(setToastMsg('🦄 Successfully updated activity!', 'success'))
+        } else {
+            dispatch(setToastMsg(msg, 'error'))
+        }
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("img", img);
         let formData = new FormData();
-        formData.append('domain_id', domainId);
-        formData.append('index', cardId);
-        formData.append('text', activityText)
+        formData.append('name', activityText)
         if (img !== '') {
-            formData.append('img', img)
+            formData.append('image', img)
         }
         for (var pair of formData.entries()) {
             console.log(pair[0] + ', ' + pair[1]);
         }
-        ActivityAPI.createActivity(formData, createCardCb);
+        console.log(formData);
+        if(modalActivity){
+            ActivityAPI.updateActivity(topicId, categoryId, modalActivity._id, formData, updateActivityCb);
+
+        }else {
+            ActivityAPI.createActivity(topicId, categoryId, formData, createActivityCb);
+        }
     }
 
     return (
         <Modal show={true} onHide={() => setModalVisible(false)}>
-            <Modal.Header closeButton>Edit {cardId}th Card</Modal.Header>
+            <Modal.Header closeButton></Modal.Header>
             <Modal.Body>
                 <div className="auth-wrapper">
                     <div className="auth-inner">
@@ -54,7 +71,7 @@ function CardModal({ domainId, cardId, setModalVisible }) {
                                         <label>Activity Text</label>
                                     </Col>
                                     <Col md={6}>
-                                        <input name="name" type="text" className="form-control" placeholder="Enter text" onChange={e => setActivityText(e.target.value)} />
+                                        <input name="name" type="text" className="form-control" value={activityText} placeholder="Name" onChange={e => setActivityText(e.target.value)} />
                                     </Col>
                                 </Row>
                             </div>
@@ -66,10 +83,22 @@ function CardModal({ domainId, cardId, setModalVisible }) {
 
                                     </Col>
                                     <Col md={6}>
-                                        <input type="file" name="img" filename="img" className="form-control-file" onChange={e => setImg(e.target.files[0])} />
+                                        <input type="file" name="image" filename="image"  className="form-control-file" onChange={e => setImg(e.target.files[0])} />
                                     </Col>
                                 </Row>
                             </div>
+                            {modalActivity && modalActivity.image ?
+                                <div className="form-group">
+                                    <Row>
+                                        <Col md={6}>
+                                            <label htmlFor="oldImage">Old Image</label>
+                                        </Col>
+                                        <Col md={6}>
+                                            <img src={modalActivity.image} alt="Activity Image"/>
+                                        </Col>
+                                    </Row>
+                                </div> : null
+                            }
 
                             <button type="submit" className="btn btn-primary btn-block">Submit</button>
                         </form>

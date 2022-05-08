@@ -54,7 +54,7 @@ export default function Signup() {
 
                     <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
                     <p className="forgot-password text-right">
-                        Already registered <a href="/src/pages/Topics">sign in?</a>
+                        Already registered <a href="/src/views/Topics">sign in?</a>
                     </p>
                 </form>
             </div>

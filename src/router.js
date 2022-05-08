@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux'
 import Signin from "./others/Signin";
 import Signup from "./others/Signup";
 import Signout from './others/Signout';
-import Topics from './pages/Topics';
-import Categories from './pages/Categories'
-import Activities from "./pages/Activities";
+import Topics from './views/Topics';
+import Categories from './views/Categories'
+import Activities from "./views/Activities";
 import Navbar from './navbar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

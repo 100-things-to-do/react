@@ -1,0 +1,75 @@
+.parent {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.activity-container {
+    display: flex;
+    width: 100vw;
+    height: 20vh;
+    margin: 5px;
+    background-color: green;
+
+
+}
+
+@media only screen
+and (min-device-width : 300px)
+and (max-device-width : 640px) {
+    .activity-container {
+        display: flex;
+        width: 40vw;
+        height: 20vh;
+        margin: 5px;
+        background-color: green;
+    }
+}
+
+@media only screen
+and (min-device-width : 640px)
+and (max-device-width : 768px) {
+    .activity-container {
+        display: flex;
+        width: 30vw;
+        height: 20vh;
+        margin: 5px;
+        background-color: green;
+    }
+}
+
+@media only screen
+and (min-device-width : 768px) {
+    .activity-container {
+        display: flex;
+        width: 23vw;
+        height: 20vh;
+        margin: 5px;
+        background-color: blue;
+
+    }
+}
+
+@media only screen
+and (min-device-width : 1024px) {
+    .activity-container {
+        display: flex;
+        width: 23vw;
+        height: 20vh;
+        margin: 5px;
+        background-color: blue;
+
+    }
+}
+
+
+
+
+
+.curtain-visible {
+    height: 100%;
+    width: 100%;
+}
+
+.curtain-invisible{
+    display: none;
+}
