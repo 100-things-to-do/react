@@ -142,7 +142,6 @@ function AdminPanel({isAdmin, setIsAdmin}) {
 
 
 function Activity({isAdmin, activity, index, setModalActivity, setModalVisible}) {
-    const backgroundImage = activity && activity.image ? `url(http://localhost:6666/${activity.image})` : null;
     const backgroundColor = activity ? "#0AA1DD" : "black";
     const [isOpen, setIsOpen] = useState(false);
 
@@ -159,7 +158,7 @@ function Activity({isAdmin, activity, index, setModalActivity, setModalVisible})
 
     return (
         <div key={index} className="activity-container"
-             style={{backgroundSize: '200px 225px', backgroundImage: backgroundImage, backgroundColor: backgroundColor}}
+             style={{backgroundSize: '200px 225px', backgroundColor: backgroundColor}}
              onClick={() => curtainClickEvent()}>
             {activity && activity.image ?
                 <div className="inner-container">
