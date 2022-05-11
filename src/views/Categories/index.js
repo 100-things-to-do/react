@@ -54,12 +54,15 @@ function Categories() {
                 <EditTopicModal setIsTopicUpdated={setIsTopicUpdated} setIsEditTopicModalVisible={setIsEditTopicModalVisible} topic={topic} /> : null
             }
 
-            <div className="topic-container">
-                <div>
+            <div className="header-container">
+                <div className="header-inner-container">
+                    <span>
                     { topic ? `Topic - ${topic.name}` : null
                     }
-                </div>
+                    </span>
                     <img className="topic-edit-container" src={editImage}  onClick={() => setIsEditTopicModalVisible(true)}></img>
+                </div>
+
             </div>
 
 

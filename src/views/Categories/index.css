@@ -24,10 +24,23 @@
     position: relative;
     align-content: center;
     flex-direction: column;
-    align-content: center;
     text-align: center;
 }
 
 .category-image{
     height: 80%;
+}
+
+.header-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+.header-inner-container{
+    text-align: center;
+    align-content: center;
+    align-items: center;
 }
