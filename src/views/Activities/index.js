@@ -1,14 +1,10 @@
 import React, {useState, useRef} from 'react';
 import {useEffect} from 'react';
-import {useSelector} from 'react-redux';
-import $ from "jquery";
 import curtain from '../../assets/curtain.jpeg';
 import cross from '../../assets/cross2.png'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
 import {useParams} from 'react-router';
 import {Switch} from '@mui/material';
-import ActivityModal from "./Modal";
+import CreateActivityModal from "./createActivityModal";
 import ActivityAPI from '../../apis/ActivityAPI'
 import CategoryAPI from '../../apis/CategoryAPI'
 
@@ -44,14 +40,21 @@ export default function Activities() {
     useEffect(() => {
         if(isActivitiesRendered){
             if (isAdmin) {
-                setActivitiesToBeRendered(activitiesToBeRendered => [...activitiesToBeRendered, null]);
+                createAddActivityItem();
             } else {
-                setActivitiesToBeRendered(activitiesToBeRendered.filter(activity => activity != null));
+                deleteAddActivityItem();
             }
-            setIsActivitiesRendered(false);
         }
 
     }, [isAdmin, isActivitiesRendered])
+
+    const createAddActivityItem = () => {
+        setActivitiesToBeRendered(activitiesToBeRendered => [...activitiesToBeRendered, null]);
+    }
+
+    const deleteAddActivityItem = () => {
+        setActivitiesToBeRendered(activitiesToBeRendered.filter(activity => activity != null));
+    }
 
     const getActivitiesCb = (resultStatus, activities) => {
         if (resultStatus) {
@@ -67,7 +70,7 @@ export default function Activities() {
     return (
         <div>
             {modalVisible ?
-                <ActivityModal
+                <CreateActivityModal
                     topicId={topicId}
                     categoryId={categoryId}
                     modalActivity={modalActivity}

@@ -7,3 +7,27 @@
     width: 5%;
     cursor:pointer;
 }
+
+.categories-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+}
+
+.category-container {
+    display: flex;
+    width: 20vw;
+    height: 20vh;
+    margin: 5vw;
+    background-color: #0AA1DD;
+    position: relative;
+    align-content: center;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+}
+
+.category-image{
+    height: 80%;
+}

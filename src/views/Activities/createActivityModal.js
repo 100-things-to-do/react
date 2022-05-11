@@ -3,12 +3,12 @@ import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import ActivityAPI from '../../../apis/ActivityAPI';
-import {setToastMsg} from '../../../redux'
+import ActivityAPI from '../../apis/ActivityAPI';
+import {setToastMsg} from '../../redux'
 import {useSelector, useDispatch} from 'react-redux';
 
 
-function ActivityModal({topicId, categoryId, modalActivity, setModalVisible, setIsNewActivity}) {
+function CreateActivityModal({topicId, categoryId, modalActivity, setModalVisible, setIsNewActivity}) {
     const [activityText, setActivityText] = useState("");
     const [img, setImg] = useState("");
     const dispatch = useDispatch()
@@ -117,4 +117,4 @@ function ActivityModal({topicId, categoryId, modalActivity, setModalVisible, set
 }
 
 
-export default ActivityModal;
+export default CreateActivityModal;

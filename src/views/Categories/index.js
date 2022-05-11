@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
-import CategoryModal from './Modal';
+import CreateCategoryModal from './createCategoryModal';
 import CategoryAPI from '../../apis/CategoryAPI'
 import TopicAPI  from '../../apis/TopicAPI'
 import {useParams} from "react-router-dom";
 import {Image} from "react-bootstrap";
 import editImage from "../../assets/edit-icon.png"
+import noImageIcon from "../../assets/no-image-icon.png"
 import EditTopicModal from "./editTopicModal";
 require("./index.css")
+
 
 function Categories() {
     const { topicId } = useParams(); // this is defined in path(mainRouter)
@@ -38,14 +40,20 @@ function Categories() {
 
     const getCategoriesCb = (resultBoolean, categories) => {
         if (resultBoolean) {
-            setCategories(categories.map((category) => {
-                return <Dropdown.Item href={`/topics/${topicId}/categories/${category._id}/activities`}>{category.name}</Dropdown.Item >
-            }))
+            setCategories(categories);
         }
     }
     
     return (
         <div>
+            {modalVisible ?
+                <CreateCategoryModal setModalVisible={setModalVisible} topicId={topicId} /> : null
+            }
+
+            {isEditTopicModalVisible ?
+                <EditTopicModal setIsTopicUpdated={setIsTopicUpdated} setIsEditTopicModalVisible={setIsEditTopicModalVisible} topic={topic} /> : null
+            }
+
             <div className="topic-container">
                 <div>
                     { topic ? `Topic - ${topic.name}` : null
@@ -54,18 +62,35 @@ function Categories() {
                     <img className="topic-edit-container" src={editImage}  onClick={() => setIsEditTopicModalVisible(true)}></img>
             </div>
 
-            {modalVisible ?
-                <CategoryModal setModalVisible={setModalVisible} topicId={topicId} /> : null
-            }
 
-            {isEditTopicModalVisible ?
-                <EditTopicModal setIsTopicUpdated={setIsTopicUpdated} setIsEditTopicModalVisible={setIsEditTopicModalVisible} topic={topic} /> : null
-            }
 
-            <DropdownButton id="dropdown-basic-button" title="Category List">
-                {categories}
-            </DropdownButton>
+            <div className="categories-container">
+                {
+                    categories.map((category, index) =>
+                        <Category
+                            topicId={topicId}
+                            category={category}
+                            index={index}
+                        />
+                    )
+                }
+            </div>
             <button onClick={() => setModalVisible(true)}>Add Category</button>
+        </div>
+
+    )
+}
+
+
+function Category({topicId, category}){
+    const URL_POSTFIX = `/topics/${topicId}/categories/${category._id}/activities`;
+    return (
+        <div className="category-container">
+            <img src={category.image ? category.image : noImageIcon}
+                 className="category-image"/>
+            <a href={URL_POSTFIX}>
+                {category.name}
+            </a>
         </div>
 
     )

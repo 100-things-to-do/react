@@ -3,13 +3,13 @@ import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { setToastMsg } from '../../../redux'
+import { setToastMsg } from '../../redux'
 import { useSelector, useDispatch } from 'react-redux';
-import CategoryAPI from '../../../apis/CategoryAPI';
+import CategoryAPI from '../../apis/CategoryAPI';
 
 
 
-function CategoryModal({ setModalVisible, topicId }) {
+function CreateCategoryModal({ setModalVisible, topicId }) {
     const [name, setName] = useState(null);
     const [size, setSize] = useState(null);
     const dispatch = useDispatch()
@@ -55,4 +55,4 @@ function CategoryModal({ setModalVisible, topicId }) {
     )
 }
 
-export default CategoryModal;
+export default CreateCategoryModal;
