@@ -1,0 +1,9 @@
+.topic-container{
+    display: inline-flex;
+}
+
+.topic-edit-container{
+    height:auto;
+    width: 5%;
+    cursor:pointer;
+}

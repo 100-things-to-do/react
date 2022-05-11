@@ -41,6 +41,22 @@ export default {
             .catch(error => {
                 callback(false, error && error.response && error.response.data ? error.response.data : error)
             })
+    },
+
+
+    updateTopic(topicId, bodyData, callback) {
+        axios({
+            method: 'put',
+            url: expressUrl + `/topics/${topicId}`,
+            data: bodyData,
+        }).then(response => {
+            console.log(response)
+            const topicData = response.data.topic
+            callback(true, topicData)
+        })
+            .catch(error => {
+                callback(false, error && error.response && error.response.data ? error.response.data : error)
+            })
     }
 }
 

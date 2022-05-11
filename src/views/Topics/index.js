@@ -3,13 +3,13 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import TopicModal from './Modal';
 import TopicAPI from '../../apis/TopicAPI'
+require('./index.css')
 
 function Topics() {
     const [modalVisible, setModalVisible] = useState(false);
     const [topics, setTopics] = useState([]);
 
     useEffect(() => {
-        console.log("topics")
         TopicAPI.getTopics(getTopicsCb);
     }, []);
 
@@ -23,14 +23,14 @@ function Topics() {
 
 
     return (
-        <div>
+        <div className="flex-container">
             {modalVisible ?
                 <TopicModal setModalVisible={setModalVisible} /> : null
             }
             <DropdownButton id="dropdown-basic-button" title="Topic List">
                 {topics}
             </DropdownButton>
-            <button onClick={() => setModalVisible(true)}>Add Topic</button>
+            <button className="button" onClick={() => setModalVisible(true)}>Add Topic</button>
         </div>
 
     )
