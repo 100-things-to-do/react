@@ -44,3 +44,13 @@
     align-content: center;
     align-items: center;
 }
+
+.image-overlay{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.clickable{
+    cursor:pointer;
+}

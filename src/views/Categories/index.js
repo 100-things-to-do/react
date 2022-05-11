@@ -8,6 +8,7 @@ import {useParams} from "react-router-dom";
 import {Image} from "react-bootstrap";
 import editImage from "../../assets/edit-icon.png"
 import noImageIcon from "../../assets/no-image-icon.png"
+import addCategoryIcon from "../../assets/cross2.png"
 import EditTopicModal from "./editTopicModal";
 require("./index.css")
 
@@ -18,19 +19,22 @@ function Categories() {
     const [isEditTopicModalVisible, setIsEditTopicModalVisible] = useState(false);
     const [categories, setCategories] = useState([]);
     const [topic, setTopic] = useState(null);
-    const [isTopicUpdated, setIsTopicUpdated] = useState(false);
 
     useEffect(() => {
         CategoryAPI.getCategories(topicId, getCategoriesCb);
         TopicAPI.getTopic(topicId, getTopicCb);
     }, []);
 
-    useEffect(() => {
-        if(isTopicUpdated){
-            TopicAPI.getTopic(topicId, getTopicCb);
-            setIsTopicUpdated(false);
-        }
-    }, [isTopicUpdated])
+
+
+    const fetchCategories = () => {
+        CategoryAPI.getCategories(topicId, getCategoriesCb);
+    }
+
+    const fetchTopic = () => {
+        TopicAPI.getTopic(topicId, getTopicCb);
+    }
+
 
     const getTopicCb = (resultBoolean, topic) => {
         if (resultBoolean) {
@@ -47,11 +51,11 @@ function Categories() {
     return (
         <div>
             {modalVisible ?
-                <CreateCategoryModal setModalVisible={setModalVisible} topicId={topicId} /> : null
+                <CreateCategoryModal fetchCategories={fetchCategories} setModalVisible={setModalVisible} topicId={topicId} /> : null
             }
 
             {isEditTopicModalVisible ?
-                <EditTopicModal setIsTopicUpdated={setIsTopicUpdated} setIsEditTopicModalVisible={setIsEditTopicModalVisible} topic={topic} /> : null
+                <EditTopicModal fetchTopic={fetchTopic} setIsEditTopicModalVisible={setIsEditTopicModalVisible} topic={topic} /> : null
             }
 
             <div className="header-container">
@@ -76,9 +80,10 @@ function Categories() {
                             index={index}
                         />
                     )
+
                 }
+                <AddCategoryCard setModalVisible={setModalVisible}/>
             </div>
-            <button onClick={() => setModalVisible(true)}>Add Category</button>
         </div>
 
     )
@@ -94,6 +99,15 @@ function Category({topicId, category}){
             <a href={URL_POSTFIX}>
                 {category.name}
             </a>
+        </div>
+
+    )
+}
+
+function AddCategoryCard({setModalVisible}){
+    return (
+        <div className="category-container clickable" onClick={() => setModalVisible(true)}>
+            <img className="image-overlay" src={addCategoryIcon}></img>
         </div>
 
     )

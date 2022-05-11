@@ -9,13 +9,14 @@ import CategoryAPI from '../../apis/CategoryAPI';
 
 
 
-function CreateCategoryModal({ setModalVisible, topicId }) {
+function CreateCategoryModal({ fetchCategories, setModalVisible, topicId }) {
     const [name, setName] = useState(null);
     const [size, setSize] = useState(null);
     const dispatch = useDispatch()
 
     const createCategoryCb = () => {
         setModalVisible(false);
+        fetchCategories();
         dispatch(setToastMsg('🦄 Category added!', 'success'))
     }
 

@@ -9,13 +9,13 @@ import TopicAPI from '../../apis/TopicAPI';
 
 
 
-function EditTopicModal({ setIsTopicUpdated, setIsEditTopicModalVisible, topic }) {
+function EditTopicModal({ fetchTopic, setIsEditTopicModalVisible, topic }) {
     const [name, setName] = useState(topic.name);
     const dispatch = useDispatch()
 
     const updateTopicCb = () => {
-        setIsTopicUpdated(true);
         setIsEditTopicModalVisible(false);
+        fetchTopic();
         dispatch(setToastMsg('🦄 Topic updated!', 'success'))
     }
 
@@ -35,7 +35,7 @@ function EditTopicModal({ setIsTopicUpdated, setIsEditTopicModalVisible, topic }
 
     return (
         <Modal show={true} onHide={() => setIsEditTopicModalVisible(false)}>
-            <Modal.Header closeButton>Create Category</Modal.Header>
+            <Modal.Header closeButton>Edit Topic</Modal.Header>
             <Modal.Body>
                 <div className="auth-wrapper">
                     <div className="auth-inner">
