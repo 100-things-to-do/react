@@ -8,7 +8,7 @@ import {setToastMsg} from '../../redux'
 import {useSelector, useDispatch} from 'react-redux';
 
 
-function CreateActivityModal({topicId, categoryId, modalActivity, setModalVisible, setIsNewActivity}) {
+function CreateActivityModal({topicId, categoryId, modalActivity, setModalVisible, fetchActivities}) {
     const [activityText, setActivityText] = useState("");
     const [img, setImg] = useState("");
     const dispatch = useDispatch()
@@ -27,7 +27,7 @@ function CreateActivityModal({topicId, categoryId, modalActivity, setModalVisibl
         } else {
             dispatch(setToastMsg(msg, 'error'))
         }
-        setIsNewActivity(true);
+        fetchActivities();
     }
 
     function updateActivityCb(isSuccess, msg) {
@@ -38,7 +38,7 @@ function CreateActivityModal({topicId, categoryId, modalActivity, setModalVisibl
         } else {
             dispatch(setToastMsg(msg, 'error'))
         }
-        setIsNewActivity(true);
+        fetchActivities();
     }
 
     const handleSubmit = (event) => {

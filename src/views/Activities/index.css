@@ -110,3 +110,7 @@ and (min-device-width : 1024px) {
 .curtain-invisible{
     display: none;
 }
+
+.clickable{
+    cursor:pointer;
+}

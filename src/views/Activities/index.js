@@ -1,7 +1,8 @@
 import React, {useState, useRef} from 'react';
 import {useEffect} from 'react';
 import curtain from '../../assets/curtain.jpeg';
-import cross from '../../assets/cross2.png'
+import cross from '../../assets/cross2.png';
+import noImageIcon from "../../assets/no-image-icon.png";
 import {useParams} from 'react-router';
 import {Switch} from '@mui/material';
 import CreateActivityModal from "./createActivityModal";
@@ -16,10 +17,8 @@ export default function Activities() {
     const {topicId, categoryId} = useParams(); // this is defined in path(mainRouter)
     const [isAdmin, _setIsAdmin] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
-    const [modalActivity, setModalActivity] = useState({});
-    const [activitiesToBeRendered, setActivitiesToBeRendered] = useState([]);
-    const [isActivitiesRendered, setIsActivitiesRendered] = useState(false);
-    const [isNewActivity, setIsNewActivity] = useState(false);
+    const [selectedActivity, setSelectedActivity] = useState({});
+    const [activities, setActivities] = useState([]);
     const isAdminRef = useRef(isAdmin);
     const setIsAdmin = (data) => {
         isAdminRef.current = data;
@@ -30,37 +29,16 @@ export default function Activities() {
         ActivityAPI.getActivities(topicId, categoryId, getActivitiesCb)
     }, [])
 
-    useEffect(() => {
-        if(isNewActivity){
-            ActivityAPI.getActivities(topicId, categoryId, getActivitiesCb);
-            setIsNewActivity(false);
-        }
-    }, [isNewActivity])
 
-    useEffect(() => {
-        if(isActivitiesRendered){
-            if (isAdmin) {
-                createAddActivityItem();
-            } else {
-                deleteAddActivityItem();
-            }
-        }
 
-    }, [isAdmin, isActivitiesRendered])
-
-    const createAddActivityItem = () => {
-        setActivitiesToBeRendered(activitiesToBeRendered => [...activitiesToBeRendered, null]);
+    const fetchActivities = () => {
+        ActivityAPI.getActivities(topicId, categoryId, getActivitiesCb);
     }
 
-    const deleteAddActivityItem = () => {
-        setActivitiesToBeRendered(activitiesToBeRendered.filter(activity => activity != null));
-    }
 
     const getActivitiesCb = (resultStatus, activities) => {
         if (resultStatus) {
-            console.log(activities)
-            setActivitiesToBeRendered(activities)
-            setIsActivitiesRendered(true)
+            setActivities(activities)
         } else {
             console.log("error");
         }
@@ -73,9 +51,9 @@ export default function Activities() {
                 <CreateActivityModal
                     topicId={topicId}
                     categoryId={categoryId}
-                    modalActivity={modalActivity}
+                    selectedActivity={selectedActivity}
                     setModalVisible={setModalVisible}
-                    setIsNewActivity={setIsNewActivity}
+                    fetchActivities={fetchActivities}
                 /> : null
             }
             <div className="header-container">
@@ -85,17 +63,27 @@ export default function Activities() {
             <span>&nbsp;&nbsp;</span>
             <div className="activities-container">
                 {
-                    activitiesToBeRendered.map((activity, index) =>
+                    activities.map((activity, index) =>
                         <Activity
                             isAdmin={isAdmin}
                             activity={activity}
                             index={index}
-                            setModalActivity={setModalActivity}
+                            setSelectedActivity={setSelectedActivity}
                             setModalVisible={setModalVisible}
                         />
                     )
+
                 }
+                {
+                    isAdmin ?
+                    <AddActivityCard
+                        setSelectedActivity={setSelectedActivity}
+                        setModalVisible={setModalVisible}
+                    /> : null
+                }
+
             </div>
+
         </div>
 
 
@@ -144,7 +132,7 @@ function AdminPanel({isAdmin, setIsAdmin}) {
 }
 
 
-function Activity({isAdmin, activity, index, setModalActivity, setModalVisible}) {
+function Activity({isAdmin, activity, index, setSelectedActivity, setModalVisible}) {
     const backgroundColor = activity ? "#0AA1DD" : "black";
     const [isOpen, setIsOpen] = useState(false);
 
@@ -154,19 +142,19 @@ function Activity({isAdmin, activity, index, setModalActivity, setModalVisible})
 
     useEffect(() => {
         if (isOpen & isAdmin) {
-            setModalActivity(activity);
+            setSelectedActivity(activity);
             setModalVisible(true);
         }
     }, [isOpen])
 
     return (
-        <div key={index} className="activity-container"
+        <div key={index} className="activity-container clickable"
              style={{backgroundSize: '200px 225px', backgroundColor: backgroundColor}}
              onClick={() => curtainClickEvent()}>
-            {activity && activity.image ?
+            {activity ?
                 <div className="inner-container">
-                    <img src={activity.image} key={index}
-                          className="activity-image"/>
+                    <img src={activity.image ? activity.image : noImageIcon} key={index}
+                         className="activity-image"/>
                     <p>Activity Name: {activity && activity.name ? activity.name : index}</p>
                 </div>
                 :
@@ -175,5 +163,25 @@ function Activity({isAdmin, activity, index, setModalActivity, setModalVisible})
             }
             <img src={curtain} key={index} alt={index}
                  className={"image-overlay " + (isAdmin || isOpen ? "curtain-invisible" : "curtain-visible")}/>
-        </div>)
+        </div>
+    )
+}
+
+function AddActivityCard({setSelectedActivity, setModalVisible}) {
+    const BACKGROUND_COLOR = "black";
+
+    function handleAddActivityEvent() {
+        setSelectedActivity(null);
+        setModalVisible(true);
+    }
+
+
+    return (
+        <div className="activity-container"
+             style={{backgroundSize: '200px 225px', backgroundColor: BACKGROUND_COLOR}}
+             onClick={() => handleAddActivityEvent()}>
+                <img src={cross}
+                     className="image-overlay plus-sign"/>
+        </div>
+    )
 }

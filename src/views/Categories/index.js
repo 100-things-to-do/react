@@ -10,6 +10,7 @@ import editImage from "../../assets/edit-icon.png"
 import noImageIcon from "../../assets/no-image-icon.png"
 import addCategoryIcon from "../../assets/cross2.png"
 import EditTopicModal from "./editTopicModal";
+import { Link } from 'react-router-dom';
 require("./index.css")
 
 
@@ -93,13 +94,13 @@ function Categories() {
 function Category({topicId, category}){
     const URL_POSTFIX = `/topics/${topicId}/categories/${category._id}/activities`;
     return (
-        <div className="category-container">
+
+        <Link className="category-container" to={URL_POSTFIX} >
             <img src={category.image ? category.image : noImageIcon}
                  className="category-image"/>
-            <a href={URL_POSTFIX}>
                 {category.name}
-            </a>
-        </div>
+        </Link>
+
 
     )
 }
