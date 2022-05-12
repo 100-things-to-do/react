@@ -1,20 +1,8 @@
-.main {
-    background-color: #0AA1DD;
-    flex-grow: 1;
-    overflow: auto;
-    height: 100%;
-}
-
 .button{
     width: 10vw;
 }
 
-.header-container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-content: center;
-}
+
 
 .centered-flex{
     display: flex;
@@ -25,7 +13,6 @@
 
 .vertical-flex{
     flex-direction: column;
-
 }
 
 .header-text{

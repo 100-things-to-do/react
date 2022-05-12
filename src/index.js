@@ -6,6 +6,7 @@ import store from './redux/store'
 import { BrowserRouter } from "react-router-dom";
 import MainRouter from './router'
 import ErrorBoundary from "./others/ErrorBoundary"
+require("./common.css")
 
 ReactDOM.render(
   <ErrorBoundary>

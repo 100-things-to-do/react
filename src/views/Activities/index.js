@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react';
 import {useEffect} from 'react';
 import curtain from '../../assets/curtain.jpeg';
-import cross from '../../assets/cross2.png';
+import addCategoryIcon from '../../assets/add-document-icon.png';
 import noImageIcon from "../../assets/no-image-icon.png";
 import {useParams} from 'react-router';
 import {Switch} from '@mui/material';
@@ -30,7 +30,6 @@ export default function Activities() {
     }, [])
 
 
-
     const fetchActivities = () => {
         ActivityAPI.getActivities(topicId, categoryId, getActivitiesCb);
     }
@@ -57,8 +56,10 @@ export default function Activities() {
                 /> : null
             }
             <div className="header-container">
+                <div className="width-30 blue">
                 <CategoryHeader topicId={topicId} categoryId={categoryId}/>
                 <AdminPanel isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>
+                </div>
             </div>
             <span>&nbsp;&nbsp;</span>
             <div className="activities-container">
@@ -76,10 +77,10 @@ export default function Activities() {
                 }
                 {
                     isAdmin ?
-                    <AddActivityCard
-                        setSelectedActivity={setSelectedActivity}
-                        setModalVisible={setModalVisible}
-                    /> : null
+                        <AddActivityCard
+                            setSelectedActivity={setSelectedActivity}
+                            setModalVisible={setModalVisible}
+                        /> : null
                 }
 
             </div>
@@ -144,23 +145,19 @@ function Activity({isAdmin, activity, index, setSelectedActivity, setModalVisibl
         if (isOpen & isAdmin) {
             setSelectedActivity(activity);
             setModalVisible(true);
+            setIsOpen(false);
         }
     }, [isOpen])
 
     return (
-        <div key={index} className="activity-container clickable"
+        <div key={index} className="activity-container clickable smooth-border margin-2vw"
              style={{backgroundSize: '200px 225px', backgroundColor: backgroundColor}}
              onClick={() => curtainClickEvent()}>
-            {activity ?
-                <div className="inner-container">
-                    <img src={activity.image ? activity.image : noImageIcon} key={index}
-                         className="activity-image"/>
-                    <p>Activity Name: {activity && activity.name ? activity.name : index}</p>
-                </div>
-                :
-                <img src={cross} key={index} alt={index}
-                     className="image-overlay plus-sign"/>
-            }
+            <div className="inner-container">
+                <img src={activity.image ? activity.image : noImageIcon} key={index}
+                     className="activity-image smooth-border"/>
+                <p>Activity Name: {activity && activity.name ? activity.name : index}</p>
+            </div>
             <img src={curtain} key={index} alt={index}
                  className={"image-overlay " + (isAdmin || isOpen ? "curtain-invisible" : "curtain-visible")}/>
         </div>
@@ -168,20 +165,14 @@ function Activity({isAdmin, activity, index, setSelectedActivity, setModalVisibl
 }
 
 function AddActivityCard({setSelectedActivity, setModalVisible}) {
-    const BACKGROUND_COLOR = "black";
-
     function handleAddActivityEvent() {
         setSelectedActivity(null);
         setModalVisible(true);
     }
-
-
     return (
-        <div className="activity-container"
-             style={{backgroundSize: '200px 225px', backgroundColor: BACKGROUND_COLOR}}
-             onClick={() => handleAddActivityEvent()}>
-                <img src={cross}
-                     className="image-overlay plus-sign"/>
+        <div className="activity-container clickable margin-2vw" onClick={() => handleAddActivityEvent()}>
+            <img src={addCategoryIcon}
+                 className="image-overlay"/>
         </div>
     )
 }

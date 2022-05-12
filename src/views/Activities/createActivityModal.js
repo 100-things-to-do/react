@@ -8,14 +8,14 @@ import {setToastMsg} from '../../redux'
 import {useSelector, useDispatch} from 'react-redux';
 
 
-function CreateActivityModal({topicId, categoryId, modalActivity, setModalVisible, fetchActivities}) {
+function CreateActivityModal({topicId, categoryId, selectedActivity, setModalVisible, fetchActivities}) {
     const [activityText, setActivityText] = useState("");
     const [img, setImg] = useState("");
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (modalActivity) {
-            setActivityText(modalActivity.name)
+        if (selectedActivity) {
+            setActivityText(selectedActivity.name)
         }
     }, [])
 
@@ -52,8 +52,8 @@ function CreateActivityModal({topicId, categoryId, modalActivity, setModalVisibl
             console.log(pair[0] + ', ' + pair[1]);
         }
         console.log(formData);
-        if (modalActivity) {
-            ActivityAPI.updateActivity(topicId, categoryId, modalActivity._id, formData, updateActivityCb);
+        if (selectedActivity) {
+            ActivityAPI.updateActivity(topicId, categoryId, selectedActivity._id, formData, updateActivityCb);
 
         } else {
             ActivityAPI.createActivity(topicId, categoryId, formData, createActivityCb);
@@ -63,7 +63,7 @@ function CreateActivityModal({topicId, categoryId, modalActivity, setModalVisibl
     return (
         <Modal show={true} onHide={() => setModalVisible(false)}>
             <Modal.Header closeButton>
-                <span className="thick">{modalActivity ? "Update Activity" : "Create Activity"}</span>
+                <span className="thick">{selectedActivity ? "Update Activity" : "Create Activity"}</span>
             </Modal.Header>
             <Modal.Body>
                 <div className="auth-wrapper">
@@ -93,14 +93,14 @@ function CreateActivityModal({topicId, categoryId, modalActivity, setModalVisibl
                                     </Col>
                                 </Row>
                             </div>
-                            {modalActivity && modalActivity.image ?
+                            {selectedActivity && selectedActivity.image ?
                                 <div className="form-group">
                                     <Row>
                                         <Col md={6}>
                                             <label htmlFor="oldImage">Old Image</label>
                                         </Col>
                                         <Col md={6}>
-                                            <img src={modalActivity.image} alt="Activity Image"/>
+                                            <img src={selectedActivity.image} alt="Activity Image"/>
                                         </Col>
                                     </Row>
                                 </div> : null

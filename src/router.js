@@ -12,6 +12,7 @@ import Activities from "./views/Activities";
 import Navbar from './navbar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './views/Topics/index.css'
 
 const validUserRoutes = [
 
@@ -61,10 +62,8 @@ function MainRouter() {
 
 
   return (<Router>
-    <div className="App">
-      <div className="container">
+    <div className="main">
       <Navbar/>
-      </div>
       <Switch>
         {isUserValid ? validUserRoutes : nonValidUserRoutes}
       </Switch>

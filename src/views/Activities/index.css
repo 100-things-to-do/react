@@ -3,26 +3,24 @@ span.thick {
     display:inline;
 }
 
-.header-container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-content: center;
-}
+
 
 .activities-container {
     display: flex;
     flex-wrap: wrap;
+    /* justify-content: center; if you add this and if length != 4 then it wont fit.*/
 }
 
 .activity-container {
     display: flex;
     width: 100vw;
     height: 20vh;
-    margin: 5px;
-    background-color: green;
     position: relative;
     align-content: center;
+}
+
+.margin-2vw {
+    margin: 2vw;
 }
 
 .inner-container{
@@ -39,10 +37,8 @@ and (min-device-width : 300px)
 and (max-device-width : 640px) {
     .activity-container {
         display: flex;
-        width: 40vw;
-        height: 20vh;
-        margin: 5px;
-        background-color: green;
+        width: 35vw;
+        height: 35vh;
         position: relative;
     }
 }
@@ -52,10 +48,8 @@ and (min-device-width : 640px)
 and (max-device-width : 768px) {
     .activity-container {
         display: flex;
-        width: 30vw;
-        height: 20vh;
-        margin: 5px;
-        background-color: green;
+        width: 23vw;
+        height: 23vh;
         position: relative;
     }
 }
@@ -65,9 +59,7 @@ and (min-device-width : 768px) {
     .activity-container {
         display: flex;
         width: 23vw;
-        height: 20vh;
-        margin: 5px;
-        background-color: blue;
+        height: 23vh;
         position: relative;
     }
 }
@@ -76,10 +68,8 @@ and (min-device-width : 768px) {
 and (min-device-width : 1024px) {
     .activity-container {
         display: flex;
-        width: 23vw;
-        height: 20vh;
-        margin: 5px;
-        background-color: blue;
+        width: 15vw;
+        height: 23vh;
         position: relative;
 
     }
@@ -91,11 +81,7 @@ and (min-device-width : 1024px) {
 
 }
 
-.image-overlay{
-    height: 100%;
-    width: 100%;
-    position: absolute;
-}
+
 
 .plus-sign{
     height: 100%;
@@ -111,6 +97,3 @@ and (min-device-width : 1024px) {
     display: none;
 }
 
-.clickable{
-    cursor:pointer;
-}

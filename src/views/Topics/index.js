@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
-import TopicModal from './Modal';
+import CreateTopicModal from './createTopicModal';
 import TopicAPI from '../../apis/TopicAPI'
 
 require('./index.css')
@@ -24,8 +24,8 @@ function Topics() {
 
 
     return (
-        <div className="main">
-            {modalVisible ? <TopicModal setModalVisible={setModalVisible}/> : null}
+        <div>
+            {modalVisible ? <CreateTopicModal setModalVisible={setModalVisible}/> : null}
             <div className="centered-flex vertical-flex">
                 <span className="header-text">
                     100 Things to do

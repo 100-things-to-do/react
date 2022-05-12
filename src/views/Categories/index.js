@@ -8,7 +8,7 @@ import {useParams} from "react-router-dom";
 import {Image} from "react-bootstrap";
 import editImage from "../../assets/edit-icon.png"
 import noImageIcon from "../../assets/no-image-icon.png"
-import addCategoryIcon from "../../assets/cross2.png"
+import addCategoryIcon from "../../assets/add-document-icon.png"
 import EditTopicModal from "./editTopicModal";
 import { Link } from 'react-router-dom';
 require("./index.css")
@@ -60,19 +60,19 @@ function Categories() {
             }
 
             <div className="header-container">
-                <div className="header-inner-container">
+                <div className="width-20 blue">
                     <span>
                     { topic ? `Topic - ${topic.name}` : null
                     }
                     </span>
-                    <img className="topic-edit-container" src={editImage}  onClick={() => setIsEditTopicModalVisible(true)}></img>
+                    <img className="topic-edit-container clickable" src={editImage}  onClick={() => setIsEditTopicModalVisible(true)}></img>
                 </div>
 
             </div>
 
 
 
-            <div className="categories-container">
+            <div className="flex categories-container">
                 {
                     categories.map((category, index) =>
                         <Category
@@ -95,9 +95,9 @@ function Category({topicId, category}){
     const URL_POSTFIX = `/topics/${topicId}/categories/${category._id}/activities`;
     return (
 
-        <Link className="category-container" to={URL_POSTFIX} >
+        <Link className="flex category-container blue smooth-border margin-2vw" to={URL_POSTFIX} >
             <img src={category.image ? category.image : noImageIcon}
-                 className="category-image"/>
+                 className="category-image smooth-border"/>
                 {category.name}
         </Link>
 
@@ -107,7 +107,7 @@ function Category({topicId, category}){
 
 function AddCategoryCard({setModalVisible}){
     return (
-        <div className="category-container clickable" onClick={() => setModalVisible(true)}>
+        <div className="flex category-container clickable margin-2vw" onClick={() => setModalVisible(true)}>
             <img className="image-overlay" src={addCategoryIcon}></img>
         </div>
 

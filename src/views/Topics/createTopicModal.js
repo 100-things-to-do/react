@@ -3,13 +3,13 @@ import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { setToastMsg } from '../../../redux'
+import { setToastMsg } from '../../redux'
 import { useSelector, useDispatch } from 'react-redux';
-import  TopicAPI  from '../../../apis/TopicAPI';
+import  TopicAPI  from '../../apis/TopicAPI';
 
 
 
-function TopicModal({ setModalVisible }) {
+function CreateTopicModal({ setModalVisible }) {
     const [name, setName] = useState(null);
     const dispatch = useDispatch()
 
@@ -53,4 +53,4 @@ function TopicModal({ setModalVisible }) {
     )
 }
 
-export default TopicModal;
+export default CreateTopicModal;
