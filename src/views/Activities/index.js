@@ -8,6 +8,7 @@ import {Switch} from '@mui/material';
 import CreateActivityModal from "./createActivityModal";
 import ActivityAPI from '../../apis/ActivityAPI'
 import CategoryAPI from '../../apis/CategoryAPI'
+import {CDN_URL} from "../../common";
 
 require("./index.css");
 
@@ -154,7 +155,7 @@ function Activity({isAdmin, activity, index, setSelectedActivity, setModalVisibl
              style={{backgroundSize: '200px 225px', backgroundColor: backgroundColor}}
              onClick={() => curtainClickEvent()}>
             <div className="inner-container">
-                <img src={activity.image ? activity.image : noImageIcon} key={index}
+                <img src={activity.img ? CDN_URL + activity.img : noImageIcon} key={index}
                      className="activity-image smooth-border"/>
                 <p>Activity Name: {activity && activity.name ? activity.name : index}</p>
             </div>

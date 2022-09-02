@@ -21,7 +21,7 @@ export default {
             method: 'get',
             url: expressUrl + `/topics`,
         }).then(response => {
-            const topicData = response.data.topics
+            const topicData = response.data
             callback(true, topicData)
         })
             .catch(error => {
@@ -34,13 +34,16 @@ export default {
             method: 'get',
             url: expressUrl + `/topics/${topicId}`,
         }).then(response => {
-            console.log(response)
-            const topicData = response.data.topic
+            const topicData = response.data
             callback(true, topicData)
         })
             .catch(error => {
                 callback(false, error && error.response && error.response.data ? error.response.data : error)
             })
+    },
+
+    getCategories: (topicName) => {
+        return axios.get(expressUrl + `/topics/${topicName}/categories`);
     },
 
 

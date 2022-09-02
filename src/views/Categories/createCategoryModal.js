@@ -10,23 +10,29 @@ import CategoryAPI from '../../apis/CategoryAPI';
 
 
 function CreateCategoryModal({ fetchCategories, setModalVisible, topicId }) {
-    const [name, setName] = useState(null);
-    const [size, setSize] = useState(null);
+    const [name, setName] = useState("");
+    const [img, setImg] = useState("");
     const dispatch = useDispatch()
 
-    const createCategoryCb = () => {
+    const createCategoryCb = (isSuccess) => {
         setModalVisible(false);
         fetchCategories();
-        dispatch(setToastMsg('🦄 Category added!', 'success'))
+        console.log(isSuccess)
+        if(isSuccess){
+            dispatch(setToastMsg('🦄 Category added!', 'success'))
+        }else{
+            dispatch(setToastMsg('🦄 Category could not added!', 'error'))
+        }
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const bodyData = {
-            name,
-            size
-        }
-        CategoryAPI.createCategory(topicId, bodyData, createCategoryCb);
+        let formData = new FormData();
+        formData.append('name', name);
+        formData.append('img', img);
+
+        const isSuccess = await CategoryAPI.createCategory(topicId, formData);
+        createCategoryCb(isSuccess);
     }
 
 
@@ -36,7 +42,7 @@ function CreateCategoryModal({ fetchCategories, setModalVisible, topicId }) {
             <Modal.Body>
                 <div className="auth-wrapper">
                     <div className="auth-inner">
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} encType="multipart/form-data">
                             <div className="form-group">
                                 <Row>
                                     <Col md={6}>
@@ -44,6 +50,18 @@ function CreateCategoryModal({ fetchCategories, setModalVisible, topicId }) {
                                     </Col>
                                     <Col md={6}>
                                         <input name="name" type="text" className="form-control" placeholder="Enter category name" onChange={e => setName(e.target.value)} />
+                                    </Col>
+                                </Row>
+                            </div>
+                            <div className="form-group">
+                                <Row>
+                                    <Col md={6}>
+                                        <label htmlFor="file">Choose image</label>
+
+                                    </Col>
+                                    <Col md={6}>
+                                        <input type="file" name="image" filename="image" className="form-control-file"
+                                               onChange={e => setImg(e.target.files[0])}/>
                                     </Col>
                                 </Row>
                             </div>

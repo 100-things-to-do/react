@@ -19,13 +19,13 @@ function CreateActivityModal({topicId, categoryId, selectedActivity, setModalVis
         }
     }, [])
 
-    function createActivityCb(isSuccess, msg) {
+    function createActivityCb(isSuccess) {
         setModalVisible(false);
         if (isSuccess) {
             console.log("success");
             dispatch(setToastMsg('🦄 Successfully added activity!', 'success'))
         } else {
-            dispatch(setToastMsg(msg, 'error'))
+            dispatch(setToastMsg("Error!", 'error'))
         }
         fetchActivities();
     }
@@ -41,12 +41,12 @@ function CreateActivityModal({topicId, categoryId, selectedActivity, setModalVis
         fetchActivities();
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         let formData = new FormData();
         formData.append('name', activityText)
         if (img !== '') {
-            formData.append('image', img)
+            formData.append('img', img)
         }
         for (var pair of formData.entries()) {
             console.log(pair[0] + ', ' + pair[1]);
@@ -56,7 +56,8 @@ function CreateActivityModal({topicId, categoryId, selectedActivity, setModalVis
             ActivityAPI.updateActivity(topicId, categoryId, selectedActivity._id, formData, updateActivityCb);
 
         } else {
-            ActivityAPI.createActivity(topicId, categoryId, formData, createActivityCb);
+            const result = await ActivityAPI.createActivity(topicId, categoryId, formData, createActivityCb);
+            createActivityCb(result)
         }
     }
 

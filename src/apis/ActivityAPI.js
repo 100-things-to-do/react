@@ -1,21 +1,22 @@
 import axios from 'axios';
 import { expressUrl } from '../others/common-util';
 
+const header = {
+    headers: {
+        "Content-Type": 'multipart/form-data'
+    }
+}
+
 export default{
-    createActivity: (topicId, categoryId, data, callback) => {
-        const header = {
-            headers: {
-                "Content-Type": 'multipart/form-data'
-            }
-        }
-        axios.post(expressUrl + `/topics/${topicId}/categories/${categoryId}/activities`, data, header)
-            .then(response => {
-                const activityResponse = response.data.newActivity
-                callback(true, activityResponse)
-            })
+    createActivity: async (topicId, categoryId, data) => {
+        const createActivityUrl = expressUrl + `/activity/${categoryId}`
+        let result = true;
+        await axios.post(createActivityUrl, data, header)
             .catch(error => {
-                callback(false, error && error.response && error.response.data ? error.response.data : error);
+                console.log(error);
+                result = false;
             })
+        return result;
     },
 
     updateActivity: (topicId, categoryId, activityId, data, callback) => {
@@ -35,9 +36,9 @@ export default{
     },
 
     getActivities: (topicId, categoryId, callback) => {
-        axios.get(expressUrl + `/topics/${topicId}/categories/${categoryId}/activities`)
+        axios.get(expressUrl + `/activity/${categoryId}`)
             .then(response => {
-                const activityData = response.data.activities
+                const activityData = response.data
                 callback(true, activityData)
             })
             .catch(error => {

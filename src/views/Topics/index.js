@@ -3,6 +3,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import CreateTopicModal from './createTopicModal';
 import TopicAPI from '../../apis/TopicAPI'
+import MyAwesomeTable from "./grid";
 
 require('./index.css')
 
@@ -17,7 +18,7 @@ function Topics() {
     const getTopicsCb = (resultBoolean, topics) => {
         if (resultBoolean) {
             setTopics(topics.map((domain) => {
-                return <Dropdown.Item href={`/topics/${domain._id}/categories`}>{domain.name}</Dropdown.Item>
+                return <Dropdown.Item href={`/topics/${domain.name}/categories`}>{domain.name}</Dropdown.Item>
             }))
         }
     }
@@ -33,6 +34,7 @@ function Topics() {
             </div>
             <span>&nbsp;&nbsp;</span>
             <div className="centered-flex vertical-flex">
+                <MyAwesomeTable/>
                 <DropdownButton id="dropdown-basic-button" title="Topic List">
                     {topics}
                 </DropdownButton>

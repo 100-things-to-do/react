@@ -11,6 +11,7 @@ import noImageIcon from "../../assets/no-image-icon.png"
 import addCategoryIcon from "../../assets/add-document-icon.png"
 import EditTopicModal from "./editTopicModal";
 import { Link } from 'react-router-dom';
+import {CDN_URL} from "../../common";
 require("./index.css")
 
 
@@ -22,14 +23,15 @@ function Categories() {
     const [topic, setTopic] = useState(null);
 
     useEffect(() => {
-        CategoryAPI.getCategories(topicId, getCategoriesCb);
-        TopicAPI.getTopic(topicId, getTopicCb);
+        fetchCategories();
+        fetchTopic();
     }, []);
 
 
 
-    const fetchCategories = () => {
-        CategoryAPI.getCategories(topicId, getCategoriesCb);
+    const fetchCategories = async () => {
+        const result = await TopicAPI.getCategories(topicId);
+        setCategories(result.data);
     }
 
     const fetchTopic = () => {
@@ -43,12 +45,6 @@ function Categories() {
         }
     }
 
-    const getCategoriesCb = (resultBoolean, categories) => {
-        if (resultBoolean) {
-            setCategories(categories);
-        }
-    }
-    
     return (
         <div>
             {modalVisible ?
@@ -92,11 +88,12 @@ function Categories() {
 
 
 function Category({topicId, category}){
-    const URL_POSTFIX = `/topics/${topicId}/categories/${category._id}/activities`;
+    const GO_TO_ACTIVITIES_URL = `/topics/${topicId}/categories/${category.name}/activities`;
+    console.log(category)
     return (
 
-        <Link className="flex category-container blue smooth-border margin-2vw" to={URL_POSTFIX} >
-            <img src={category.image ? category.image : noImageIcon}
+        <Link className="flex category-container blue smooth-border margin-2vw" to={GO_TO_ACTIVITIES_URL} >
+            <img src={category.img ? CDN_URL + category.img : noImageIcon}
                  className="category-image smooth-border"/>
                 {category.name}
         </Link>
