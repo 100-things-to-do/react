@@ -11,7 +11,8 @@ import noImageIcon from "../../assets/no-image-icon.png"
 import addCategoryIcon from "../../assets/add-document-icon.png"
 import EditTopicModal from "./editTopicModal";
 import { Link } from 'react-router-dom';
-import {CDN_URL} from "../../common";
+const CDN_URL = process.env.REACT_APP_CDN_URL
+
 require("./index.css")
 
 

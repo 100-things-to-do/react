@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { expressUrl } from '../others/common-util';
+const SERVER_URL = process.env.REACT_APP_SERVER_URL
 
 const header = {
     headers: {
@@ -9,7 +9,7 @@ const header = {
 
 export default {
     createCategory: async (topicId, bodyData) => {
-        const createUrl = expressUrl + `/categories/${topicId}`;
+        const createUrl = SERVER_URL + `/categories/${topicId}`;
         let result = true;
         await axios.post(createUrl, bodyData, header).catch((error) => {
             console.log(error);
@@ -21,7 +21,7 @@ export default {
     createCategory: (topicId, bodyData, callback) => {
         axios({
             method: 'post',
-            url: expressUrl + `/topics/${topicId}/categories`,
+            url: SERVER_URL + `/topics/${topicId}/categories`,
             data: bodyData,
         }).then(response => {
             const topicData = response.data
@@ -35,7 +35,7 @@ export default {
     getCategories: (topicName, callback) => {
         axios({
             method: 'get',
-            url: expressUrl + `/categories/${topicName}`,
+            url: SERVER_URL + `/categories/${topicName}`,
         }).then(response => {
             console.log("respp", response.data)
             const topicData = response.data
@@ -48,7 +48,7 @@ export default {
     getCategory: (topicId, categoryId, callback) => {
         axios({
             method: 'get',
-            url: expressUrl + `/topics/${topicId}/categories/${categoryId}`,
+            url: SERVER_URL + `/topics/${topicId}/categories/${categoryId}`,
         }).then(response => {
             const topicData = response.data.category
             callback(true, topicData)

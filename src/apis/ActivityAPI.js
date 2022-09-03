@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { expressUrl } from '../others/common-util';
+const SERVER_URL = process.env.REACT_APP_SERVER_URL
 
 const header = {
     headers: {
@@ -9,7 +9,7 @@ const header = {
 
 export default{
     createActivity: async (topicId, categoryId, data) => {
-        const createActivityUrl = expressUrl + `/activity/${categoryId}`
+        const createActivityUrl = SERVER_URL + `/activity/${categoryId}`
         let result = true;
         await axios.post(createActivityUrl, data, header)
             .catch(error => {
@@ -25,9 +25,9 @@ export default{
                 "Content-Type": 'multipart/form-data'
             }
         }
-        axios.put(expressUrl + `/topics/${topicId}/categories/${categoryId}/activities/${activityId}`, data, header)
+        axios.put(SERVER_URL + `/topics/${topicId}/categories/${categoryId}/activities/${activityId}`, data, header)
             .then(response => {
-                const activityResponse = response.data.newActivity
+                const activityResponse = response.data
                 callback(true, activityResponse)
             })
             .catch(error => {
@@ -36,7 +36,7 @@ export default{
     },
 
     getActivities: (topicId, categoryId, callback) => {
-        axios.get(expressUrl + `/activity/${categoryId}`)
+        axios.get(SERVER_URL + `/activity/${categoryId}`)
             .then(response => {
                 const activityData = response.data
                 callback(true, activityData)

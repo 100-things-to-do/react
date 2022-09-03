@@ -1,6 +1,5 @@
 import axios from 'axios';
-import expressUrl from '../../common-util';
-
+const SERVER_URL = process.env.REACT_APP_SERVER_URL
 
 export const postAuction = (data, token, callback) => {
     const header = {
@@ -9,7 +8,7 @@ export const postAuction = (data, token, callback) => {
             "Content-Type": 'multipart/form-data'
         }
     }
-    axios.post(expressUrl + '/auctions/', data, header)
+    axios.post(SERVER_URL + '/auctions/', data, header)
         .then(response => {
             const auctionData = response.data
             callback(true, auctionData)
@@ -21,7 +20,7 @@ export const postAuction = (data, token, callback) => {
 
 
 export const updateAuction = (data, token, callback) => {
-    axios.put(expressUrl + '/users/signup', data, { headers: { "Authorization": `Bearer ${token}` } })
+    axios.put(SERVER_URL + '/users/signup', data, { headers: { "Authorization": `Bearer ${token}` } })
         .then(response => {
             const auctionData = response.data
             callback(true, auctionData)
@@ -32,7 +31,7 @@ export const updateAuction = (data, token, callback) => {
 }
 
 export const getAllAuctions = (token, callback) => {
-    axios.get(expressUrl + '/auctions/', { headers: { "Authorization": `Bearer ${token}` } })
+    axios.get(SERVER_URL + '/auctions/', { headers: { "Authorization": `Bearer ${token}` } })
         .then(response => {
             const auctionList = response.data
             callback(true, auctionList)
@@ -43,7 +42,7 @@ export const getAllAuctions = (token, callback) => {
 }
 
 export const getAuction = (auctionId, token, callback) => {
-    axios.get(expressUrl + `/auctions/${auctionId}`, { headers: { "Authorization": `Bearer ${token}` } })
+    axios.get(SERVER_URL + `/auctions/${auctionId}`, { headers: { "Authorization": `Bearer ${token}` } })
         .then(response => {
             const auction = response.data
             callback(true, auction)

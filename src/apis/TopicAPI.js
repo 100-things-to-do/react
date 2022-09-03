@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { expressUrl } from '../others/common-util';
+const SERVER_URL = process.env.REACT_APP_SERVER_URL
 
 export default {
     createTopic: (bodyData, callback) => {
         axios({
             method: 'post',
-            url: expressUrl + `/topics`,
+            url: SERVER_URL + `/topics`,
             data: bodyData,
         }).then(response => {
             const topicData = response.data
@@ -19,7 +19,7 @@ export default {
     getTopics: (callback) => {
         axios({
             method: 'get',
-            url: expressUrl + `/topics`,
+            url: SERVER_URL + `/topics`,
         }).then(response => {
             const topicData = response.data
             callback(true, topicData)
@@ -32,7 +32,7 @@ export default {
     getTopic: (topicId, callback) => {
         axios({
             method: 'get',
-            url: expressUrl + `/topics/${topicId}`,
+            url: SERVER_URL + `/topics/${topicId}`,
         }).then(response => {
             const topicData = response.data
             callback(true, topicData)
@@ -43,14 +43,14 @@ export default {
     },
 
     getCategories: (topicName) => {
-        return axios.get(expressUrl + `/topics/${topicName}/categories`);
+        return axios.get(SERVER_URL + `/topics/${topicName}/categories`);
     },
 
 
     updateTopic(topicId, bodyData, callback) {
         axios({
             method: 'put',
-            url: expressUrl + `/topics/${topicId}`,
+            url: SERVER_URL + `/topics/${topicId}`,
             data: bodyData,
         }).then(response => {
             console.log(response)

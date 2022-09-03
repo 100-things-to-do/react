@@ -8,7 +8,7 @@ import {Switch} from '@mui/material';
 import CreateActivityModal from "./createActivityModal";
 import ActivityAPI from '../../apis/ActivityAPI'
 import CategoryAPI from '../../apis/CategoryAPI'
-import {CDN_URL} from "../../common";
+const CDN_URL = process.env.REACT_APP_CDN_URL
 
 require("./index.css");
 
